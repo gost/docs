@@ -6,7 +6,7 @@ For service and dashboard: [https://hub.docker.com/r/geodan/gost/]
 
 For database: [https://hub.docker.com/r/geodan/gost-db/]
 
-For more information about the Docker gost-db image, see [https://github.com/Geodan/gost-db]
+For more information about the Docker gost-db image, see [https://github.com/gost/gost-db]
 
 The docker images can run separately, or running in a combined way using the Dockercompose file.
 
@@ -15,7 +15,7 @@ Tags: Use the tag latest for the latest development version, otherwise use a tag
 # Running GOST with Docker-compose
 
 ```
-$ wget https://raw.githubusercontent.com/Geodan/gost/master/src/docker-compose.yml 
+$ wget https://raw.githubusercontent.com/gost/docker-compose/master/docker-compose.yml 
 
 $ docker-compose up
 ```
@@ -39,7 +39,7 @@ on raspberrypi:
 docker run -p 8080:8080 -t -e gost_db_host=raspberrypi -e gost_db_database=gost -e gost_mqtt_host=raspberrypi geodan/rpi-gost
 ```
 
-# Building GOST service and dashboard image
+# Building GOST service
 
 ```
 . $ git clone https://github.com/Geodan/gost.git
@@ -51,7 +51,7 @@ docker run -p 8080:8080 -t -e gost_db_host=raspberrypi -e gost_db_database=gost 
 . $ docker push geodan/gost
 
 ```
-# Building GOST service and dashboard image for Raspberrypi
+# Building GOST service Raspberrypi
 
 ```
 docker build -f Dockerfile-rpi -t geodan/rpi-gost .
