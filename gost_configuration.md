@@ -43,3 +43,20 @@ Example setting GOST environment variable on Mac/Linux:
 export gost_db_host=192.168.40.10
 ```
 
+If you are using Docker the environment variables can be set in the docker-compose file. For example, change the external adress
+via gost_server_external_uri: 
+
+```
+    gost:
+        image: geodan/gost
+        depends_on:
+            - mosquitto
+            - gost-db
+        environment:
+            gost_db_host: gost-db
+            gost_mqtt_host: mosquitto
+            gost_server_external_uri: http://fancy_server:8181
+```
+
+
+
