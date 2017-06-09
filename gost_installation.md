@@ -94,7 +94,7 @@ go run main.go
 
 In the GOST docker-compose file all the necessary parts of GOST are downloaded and linked together.
 ```
-$ wget https://raw.githubusercontent.com/Geodan/gost/master/src/docker-compose.yml 
+$ wget https://raw.githubusercontent.com/gost/docker-compose/master/docker-compose.yml 
 
 $ docker-compose up
 ```
