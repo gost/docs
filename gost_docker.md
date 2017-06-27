@@ -1,4 +1,4 @@
-## GOST Docker support
+# GOST Docker support
 
 For getting GOST to work in Docker there are two images available on Docker Hub:
 
@@ -10,9 +10,7 @@ For more information about the Docker gost-db image, see [https://github.com/gos
 
 The docker images can run separately, or running in a combined way using the Dockercompose file.
 
-Tags: Use the tag latest for the latest development version, otherwise use a tag like '0.4' for more stable versions.
-
-# Running GOST with Docker-compose
+## Running GOST with Docker-compose
 
 ```
 $ wget https://raw.githubusercontent.com/gost/docker-compose/master/docker-compose.yml 
@@ -20,7 +18,27 @@ $ wget https://raw.githubusercontent.com/gost/docker-compose/master/docker-compo
 $ docker-compose up
 ```
 
-# Running GOST service and dashboard
+## Versioning
+
+Tags: Use the tag latest for the latest development version, otherwise use a tag like '0.5' for more stable versions.
+
+Examples:
+
+Running (stable) 0.5 build of GOST:
+```
+$ wget https://raw.githubusercontent.com/gost/docker-compose/master/docker-compose-0.5.yml 
+
+$ docker-compose -f docker-compose-0.5.yml up
+```
+
+Running (unstable) latest build of GOST:
+```
+$ wget https://raw.githubusercontent.com/gost/docker-compose/master/docker-compose.yml 
+
+$ docker-compose up
+```
+
+## Running GOST service and dashboard
 ```
 $ docker run -p 8080:8080 --link gost-db:gost-db -e gost_db_host=gost-db geodan/gost
 ```
@@ -39,7 +57,7 @@ on raspberrypi:
 docker run -p 8080:8080 -t -e gost_db_host=raspberrypi -e gost_db_database=gost -e gost_mqtt_host=raspberrypi geodan/rpi-gost
 ```
 
-# Building GOST service
+## Building GOST service
 
 ```
 $ git clone https://github.com/Geodan/gost.git
@@ -51,7 +69,7 @@ $ docker build -t geodan/gost:latest .
 $ docker push geodan/gost
 
 ```
-# Building GOST service Raspberrypi
+## Building GOST service Raspberrypi
 
 ```
 docker build -f Dockerfile-rpi -t geodan/rpi-gost .
@@ -59,7 +77,7 @@ docker build -f Dockerfile-rpi -t geodan/rpi-gost .
 docker push geodan/rpi-gost
 ```
 
-# Removing database
+## Removing database
 
 The data of the Postgis is stored on a Docker volume. If you want to remove the data use commands like:
 
@@ -71,6 +89,4 @@ Error response from daemon: unable to remove volume: remove dockercompose_postgi
 $ docker rm e31
 
 $ docker volume rm dockercompose_postgis
-```
-
 ```
