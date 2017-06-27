@@ -42,13 +42,13 @@ docker run -p 8080:8080 -t -e gost_db_host=raspberrypi -e gost_db_database=gost 
 # Building GOST service
 
 ```
-. $ git clone https://github.com/Geodan/gost.git
+$ git clone https://github.com/Geodan/gost.git
 
-. $ cd src/github.com/geodan/gost/src
+$ cd src/github.com/geodan/gost/src
 
-. $ docker build -t geodan/gost:latest .
+$ docker build -t geodan/gost:latest .
 
-. $ docker push geodan/gost
+$ docker push geodan/gost
 
 ```
 # Building GOST service Raspberrypi
@@ -59,3 +59,18 @@ docker build -f Dockerfile-rpi -t geodan/rpi-gost .
 docker push geodan/rpi-gost
 ```
 
+# Removing database
+
+The data of the Postgis is stored on a Docker volume. If you want to remove the data use commands like:
+
+```
+$ docker volume rm dockercompose_postgis
+
+Error response from daemon: unable to remove volume: remove dockercompose_postgis: volume is in use - [e31cec73654b8c19381bb1fa3b3f9f2f3dd710af3464d3321c19c54564e94e5f]
+
+$ docker rm e31
+
+$ docker volume rm dockercompose_postgis
+```
+
+```
