@@ -66,25 +66,57 @@ $ http://localhost:8080/v1.0/Sensors?$filter=tolower(name) eq 'sensor name 1'
 $ http://localhost:8080/v1.0/Sensors?$filter=concat(name,'!') eq 'sensor name 1!'
 ```
 
-## Spatial
+status: implemented
+
+## Geospatial functions
+
+geo.distance 
+
+geo.length
+
+geo.intersects
 
 geo.within 
 
-st_within 
+status: Not implemented
 
-geo.intersects 
+## Spatial Relationship Functions
+
+st_within 
 
 st_intersects
 
+st_equals
+
+st_disjoint
+
+st_touches
+
+st_overlaps
+
+st_crosses
+
+st_contains
+
+st_relate
+
+status: not implemented
+
 ## Date functions
 
-not implemented
+day, hour, minute, second, month, year
+
+status: not implemented
 
 ## Math functions
 
-not implemented
+round, floor, ceiling
+
+status: not implemented
 
 ## Type functions
 
-not implemented
+isOf
+
+status: not implemented
 
