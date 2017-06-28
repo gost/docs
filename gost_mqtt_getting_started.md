@@ -3,6 +3,8 @@
 SensorThings Api has an MQTT extension allowing users/devices to publish and subscribe to updates. In 
 this article two usecases are described: Receiving and Publishing data.
 
+In the current release GOST supports MQTT for subscribing/publishing Observations, MQTT support for other entities is planned for future release.  
+
 ## 1] Receiving MQTT data
 
 How to subscribe to Mqtt messages:
