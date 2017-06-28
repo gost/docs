@@ -4,17 +4,41 @@ Samples of supported filtering requests
 
 ## Non-spatial
 
-- contains: Sensors?$filter=contains(name, 'y s')
+- contains
 
-- startswith: Sensors?$filter=startswith(name, 'my')
+```
+$ curl http://localhost:8080/v1.0/Sensors?$filter=contains(name,'temperature')
+```
 
-- endswith: Sensors?$filter=endswith(name, 'sensor 3')
+- startswith
 
-- length: Sensors?$filter=length(name) eq 13
+```
+$ curl http://localhost:8080/v1.0/Sensors?$filter=startswith(name,'temp')
+```
 
-- indexof: Sensors$filter=indexof(name, 'y sensor') eq 1
+- endswith
 
-- substring: substringof('sensor', name) eq false
+```
+$ curl http://localhost:8080/v1.0/Sensors?$filter=endswith(name,'sensor')
+```
+
+- length
+
+```
+$ curl http://localhost:8080/v1.0/Sensors?$filter=length(name) eq 18
+```
+
+- indexof
+
+```
+$ curl http://localhost:8080/v1.0/Sensors?$indexof(name, 'sensor') eq 0
+```
+
+- substring
+
+```
+$ curl http://localhost:8080/v1.0/Sensors?$substringof('sensor', name) eq false
+```
 
 - trim
 
