@@ -31,10 +31,6 @@ And for Dashboard:
 	</Location>
   ```
   
-  Example configuration for NGINX:
-  
-  TODO
-
 ## CORS
 
 Another common usecase is to support CORS requests. See https://github.com/gost/dashboard/blob/master/default.conf for an example of configuring CORS in NGINX
