@@ -3,6 +3,7 @@
 The SensorThings API does not define specific security capabilities, security aspects should be handled
 in a different application layer (see http://docs.opengeospatial.org/is/15-078r6/15-078r6.html#21).
 
+## Limit write access
 One common usecase is to limit write access to the SensorThings API. By configuring a proxy server like Apache2 or 
 NGINX this can be achieved.
 
@@ -34,4 +35,7 @@ And for Dashboard:
   
   TODO
 
+## CORS
+
+Another common usecase is to support CORS requests. See https://github.com/gost/dashboard/blob/master/default.conf for an example of configuring CORS in NGINX
 
