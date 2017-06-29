@@ -33,5 +33,31 @@ And for Dashboard:
   
 ## CORS
 
-Another common usecase is to support CORS requests. See https://github.com/gost/dashboard/blob/master/default.conf for an example of configuring CORS in NGINX
+Another common usecase is to support CORS requests. See https://github.com/gost/dashboard/blob/master/default.conf for an example of configuring CORS in NGINX.
+
+CORS functionality can be tested from within Chrome using the following script on a different domain:
+
+```
+var http = new XMLHttpRequest();
+var url = "http://localhost:8080/v1.0/Things";
+var params = JSON.stringify({
+   "description": "my thermometer",
+   "name":"BertThermometer",
+   "properties": {
+       "organisation": "Geodan",
+       "owner": "Bert"
+   }
+});
+http.open("POST", url, true);
+
+//Send the proper header information along with the request
+http.setRequestHeader("Content-type", "application/json");
+
+http.onreadystatechange = function() {//Call a function when the state changes.
+   if(http.readyState == 4 && http.status == 201) {
+       alert(http.responseText);
+   }
+}
+http.send(params);
+```
 
