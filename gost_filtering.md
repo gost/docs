@@ -2,6 +2,25 @@
 
 Samples of supported filtering requests
 
+## Logical Operators
+
+- Equals
+
+```
+$ http://localhost:8080/v1.0/Datastream?$filter=name eq 'test1'
+```
+
+todo: Ne, Gt, Lt, Le, Ge, And, Or, Not
+
+## Arithmetic Operators
+
+todo: Add, Sub, Mul, Div, Mod
+
+## grouping Operators
+
+todo: ()
+
+
 ## String functions
 
 - contains
