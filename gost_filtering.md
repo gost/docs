@@ -240,6 +240,13 @@ $ curl http://localhost:8080/v1.0/Observations?$filter=month(phenomenonTime) eq 
 $ curl http://localhost:8080/v1.0/Observations?$filter=year(phenomenonTime) eq 2017
 ```
 
+- fractional seconds
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=fractionalseconds(phenomenonTime) eq 733
+
+todo: date, time, totaloffsetminutes, now, mindatetime, maxdatetime
+
 ## Math functions
 
 - round
