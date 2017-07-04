@@ -16,12 +16,6 @@ $ curl http://localhost:8080/v1.0/Datastream?$filter=name eq 'test1'
 $ curl http://localhost:8080/v1.0/Datastream?$filter=name ne 'test1'
 ```
 
-- Not Equals
-
-```
-$ curl http://localhost:8080/v1.0/Datastream?$filter=name ne 'test1'
-```
-
 - Lower than
 
 ```
@@ -211,9 +205,41 @@ status: not implemented
 
 ## Date functions
 
-day, hour, minute, second, month, year
+- day 
 
-status: not implemented
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=day(phenomenonTime) eq 4
+```
+
+- hour
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=hour(phenomenonTime) eq 8
+```
+
+- minute
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=minute(phenomenonTime) eq 8
+```
+
+- second
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=second(phenomenonTime) eq 8
+```
+
+- month
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=month(phenomenonTime) eq 8
+```
+
+- month
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=year(phenomenonTime) eq 2017
+```
 
 ## Math functions
 
