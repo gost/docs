@@ -102,8 +102,9 @@ $ curl http://localhost:8080/v1.0/Observations?$filter=result mod 2 eq 0
 
 ## grouping Operators
 
-todo: ()
-
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=(result sub 5) eq 45
+```
 
 ## String functions
 
