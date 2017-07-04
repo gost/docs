@@ -10,11 +10,103 @@ Samples of supported filtering requests
 $ http://localhost:8080/v1.0/Datastream?$filter=name eq 'test1'
 ```
 
-todo: Ne, Gt, Lt, Le, Ge, And, Or, Not
+- Not Equals
+
+```
+$ http://localhost:8080/v1.0/Datastream?$filter=name ne 'test1'
+```
+
+- Not Equals
+
+```
+$ http://localhost:8080/v1.0/Datastream?$filter=name ne 'test1'
+```
+
+- Lower than
+
+```
+$ http://localhost:8080/v1.0/Observations?$filter=result lt 5
+```
+
+- Lower or equals than
+
+```
+$ http://localhost:8080/v1.0/Observations?$filter=result le 5
+```
+
+- Greater than
+
+```
+$ http://localhost:8080/v1.0/Observations?$filter=result gt 5
+```
+
+- Greater or equals than
+
+```
+$ http://localhost:8080/v1.0/Observations?$filter=result ge 5
+```
+
+- And
+
+```
+$ http://localhost:8080/v1.0/Observations?$filter=result ge 5 and result le 15
+```
+
+- Or
+
+```
+$ http://localhost:8080/v1.0/Observations?$filter=result lt 5 or result gt 15
+```
+
+- Not
+
+```
+$ http://localhost:8080/v1.0/Datastream?$filter=not endswith(Description,'milk')
+```
 
 ## Arithmetic Operators
 
 todo: Add, Sub, Mul, Div, Mod
+
+- Add
+
+select observations where result equals 10 + 5 = 15
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=result eq 10 add 5
+```
+
+- Sub
+
+select observations where result equals 10 - 3 = 7
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=result eq 10 sub 3
+```
+
+- Mul
+
+select observations where result equals 10 * 3 = 30
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=result eq 10 mul 3
+```
+
+- Div
+
+select observations where result equals 21 / 3 = 7
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=result eq 21 div 3
+```
+
+- Mod
+
+select observations where result modulo 2 == 0
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=result mod 2 eq 0
+```
 
 ## grouping Operators
 
