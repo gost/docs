@@ -224,7 +224,7 @@ $ curl http://localhost:8080/v1.0/Observations?$filter=minute(phenomenonTime) eq
 - second
 
 ```
-$ curl http://localhost:8080/v1.0/Observations?$filter=second(phenomenonTime) eq 8
+$ curl http://localhost:8080/v1.0/Observations?$filter=second(phenomenonTime) eq 8.234
 ```
 
 - month
