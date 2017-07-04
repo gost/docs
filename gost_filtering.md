@@ -244,8 +244,27 @@ $ curl http://localhost:8080/v1.0/Observations?$filter=year(phenomenonTime) eq 2
 
 ```
 $ curl http://localhost:8080/v1.0/Observations?$filter=fractionalseconds(phenomenonTime) eq 733
+```
 
-todo: date, time, totaloffsetminutes, now, mindatetime, maxdatetime
+- now 
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=phenomenonTime gt now()
+```
+
+- mindatetime
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=phenomenonTime gt mindatetime()
+```
+
+- maxdatetime
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=phenomenonTime lt maxdatetime()
+```
+
+todo: date, time, totaloffsetminutes
 
 ## Math functions
 
