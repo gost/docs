@@ -4,9 +4,7 @@
 
 Check version of your Raspberry Pi:
 
-This document is written for Raspian Jessie. If you're lucky it also works 
-
-on other operating systems.
+This document is written for Raspian Jessie.
 
 ```
 pi@raspberrypi:~ $ lsb_release -a
@@ -52,3 +50,5 @@ pi@raspberrypi:~ $ docker-compose -f docker-compose-rpi.yml up
 ## Check installation
 
 - Dashboard: In browser go to http://raspberrypi:8080
+
+If dashboard is working, you can continue with the <a href="https://github.com/gost/workshops">Workshop exercises</a>. Make sure to replace 'localhost' with 'raspberrypi' in the exercises. 
