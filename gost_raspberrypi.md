@@ -29,6 +29,15 @@ Check installation with:
 ```
 pi@raspberrypi:~ $ sudo docker info
 ```
+Now install docker-compose:
+
+```
+pi@raspberrypi:~ $ sudo apt-get install python-pip
+
+pi@raspberrypi:~ $ pip install docker-compose
+
+```
+
 
 ## Install GOST
 
