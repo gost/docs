@@ -159,13 +159,13 @@ $ curl http://localhost:8080/v1.0/Sensors?$filter=toupper(name) eq 'SENSOR NAME 
 - tolower
 
 ```
-$ http://localhost:8080/v1.0/Sensors?$filter=tolower(name) eq 'sensor name 1'
+$ curl http://localhost:8080/v1.0/Sensors?$filter=tolower(name) eq 'sensor name 1'
 ```
 
 - concat
 
 ```
-$ http://localhost:8080/v1.0/Sensors?$filter=concat(name,'!') eq 'sensor name 1!'
+$ curl http://localhost:8080/v1.0/Sensors?$filter=concat(name,'!') eq 'sensor name 1!'
 ```
 
 ## Geospatial functions
