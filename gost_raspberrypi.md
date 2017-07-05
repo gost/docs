@@ -22,6 +22,14 @@ pi@raspberrypi:~ $
 pi@raspberrypi:~ $ curl -sSL get.docker.com | sh
 ```
 
+For safety, reboot the Raspberrypi.
+
+Check installation with:
+
+```
+pi@raspberrypi:~ $ sudo docker info
+```
+
 ## Install GOST
 
 Note: downloading new images can take some time... 
