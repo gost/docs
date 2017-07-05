@@ -51,4 +51,4 @@ pi@raspberrypi:~ $ docker-compose -f docker-compose-rpi.yml up
 
 - Dashboard: In browser go to http://raspberrypi:8080
 
-If dashboard is working, you can continue with the <a href="https://github.com/gost/workshops/blob/master/README.md">Workshop exercises</a>. Make sure to replace 'localhost' with 'raspberrypi' in the exercises. 
+If dashboard is working, you can continue with the <a href="https://github.com/gost/workshops/blob/master/2_configuration.md">Workshop exercises</a> to configure GOST. Make sure to replace 'localhost' with 'raspberrypi' in the exercises. 
