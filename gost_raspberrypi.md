@@ -1,4 +1,4 @@
-# How to run GOST on Raspberry Pi
+# How to run SensorThings GOST on Raspberry Pi
 
 ## Version
 
