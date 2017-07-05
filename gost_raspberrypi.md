@@ -4,7 +4,9 @@
 
 Check version of your Raspberry Pi:
 
-This document is written for Raspian Jessie. If your're lucky it also works on other operating systems.
+This document is written for Raspian Jessie. If you're lucky it also works 
+
+on other operating systems.
 
 ```
 pi@raspberrypi:~ $ lsb_release -a
