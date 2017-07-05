@@ -190,6 +190,10 @@ $ curl http://localhost:8080/v1.0/Locations?$filter=st_within(location,geography
 
 st_intersects
 
+```
+$ curl http://localhost:8080/v1.0/Locations?$filter=st_intersects(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')
+```
+
 st_equals
 
 st_disjoint
@@ -198,9 +202,17 @@ st_touches
 
 st_overlaps
 
+```
+$ curl http://localhost:8080/v1.0/Locations?$filter=st_overlaps(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')
+```
+
 st_crosses
 
 st_contains
+
+```
+$ curl http://localhost:8080/v1.0/Locations?$filter=st_contains(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')
+```
 
 st_relate
 
