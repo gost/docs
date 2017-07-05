@@ -1,10 +1,10 @@
-# How to run GOST on raspberry pi
+# How to run GOST on Raspberry Pi
 
 ## Version
 
 Check version of your Raspberry Pi:
 
-This document is written for Raspian Jessie:
+This document is written for Raspian Jessie. If your're lucky it also works on other operating systems.
 
 ```
 pi@raspberrypi:~ $ lsb_release -a
@@ -37,7 +37,6 @@ pi@raspberrypi:~ $ sudo apt-get install python-pip
 pi@raspberrypi:~ $ sudo pip install docker-compose
 
 ```
-
 
 ## Install GOST
 
