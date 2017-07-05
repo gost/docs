@@ -170,17 +170,23 @@ $ curl http://localhost:8080/v1.0/Sensors?$filter=concat(name,'!') eq 'sensor na
 
 ## Geospatial functions
 
-geo.distance
+- geo.distance
 
 ```
 $ curl http://localhost:8080/v1.0/Locations?$filter=geo.distance(location, geography'POINT(-122, 43)') gt 1 
 ```
 
-geo.length
+- geo.length
 
-geo.intersects
+```
+$ curl http://localhost:8080/v1.0/Locations?$filter=geo.length(location) gt 0 
+```
 
-geo.within 
+- geo.intersects
+
+```
+$ curl http://localhost:8080/v1.0/Locations?$filter=geo.intersects(location, geography'POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))')
+```
 
 status: Not implemented
 
