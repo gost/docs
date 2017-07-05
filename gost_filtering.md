@@ -182,7 +182,11 @@ status: Not implemented
 
 ## Spatial Relationship Functions
 
-st_within 
+- st_within 
+
+```
+$ curl http://localhost:8080/v1.0/Locations?$filter=st_within(location,geography'POLYGON((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')
+```
 
 st_intersects
 
