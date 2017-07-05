@@ -264,7 +264,23 @@ $ curl http://localhost:8080/v1.0/Observations?$filter=phenomenonTime gt mindate
 $ curl http://localhost:8080/v1.0/Observations?$filter=phenomenonTime lt maxdatetime()
 ```
 
-todo: date, time, totaloffsetminutes
+- totaloffsetminutes
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=totaloffsetminutes(phenomenonTime) eq 0
+```
+
+- date
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=date(phenomenonTime) eq 0
+```
+
+- time
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=time(phenomenonTime) eq 0
+```
 
 ## Math functions
 
