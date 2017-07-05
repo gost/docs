@@ -170,7 +170,8 @@ $ curl http://localhost:8080/v1.0/Sensors?$filter=concat(name,'!') eq 'sensor na
 
 ## Geospatial functions
 
-geo.distance 
+geo.distance
+
 
 geo.length
 
@@ -196,9 +197,20 @@ $ curl http://localhost:8080/v1.0/Locations?$filter=st_intersects(location, geog
 
 st_equals
 
+```
+$ curl http://localhost:8080/v1.0/Locations?$filter=st_equals(location, geography'POINT (-117.123 54.123)')
+```
+
 st_disjoint
 
+```
+$ curl http://localhost:8080/v1.0/Locations?$filter=st_disjoint(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')
+```
 st_touches
+
+```
+$ curl http://localhost:8080/v1.0/Locations?$filter=st_touches(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')
+```
 
 st_overlaps
 
@@ -208,6 +220,10 @@ $ curl http://localhost:8080/v1.0/Locations?$filter=st_overlaps(location, geogra
 
 st_crosses
 
+```
+$ curl http://localhost:8080/v1.0/Locations?$filter=st_crosses(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')
+```
+
 st_contains
 
 ```
@@ -215,6 +231,8 @@ $ curl http://localhost:8080/v1.0/Locations?$filter=st_contains(location, geogra
 ```
 
 st_relate
+
+from doc: st_relate(location, geography'POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))', 'T********')
 
 status: not implemented
 
@@ -289,13 +307,13 @@ $ curl http://localhost:8080/v1.0/Observations?$filter=totaloffsetminutes(phenom
 - date
 
 ```
-$ curl http://localhost:8080/v1.0/Observations?$filter=date(phenomenonTime) eq 0
+$ curl http://localhost:8080/v1.0/Observations?$filter=date(phenomenonTime) eq date('2017-07-04')
 ```
 
 - time
 
 ```
-$ curl http://localhost:8080/v1.0/Observations?$filter=time(phenomenonTime) eq 0
+$ curl http://localhost:8080/v1.0/Observations?$filter=time(phenomenonTime) eq time('14:31:24.733Z')
 ```
 
 ## Math functions
