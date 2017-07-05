@@ -34,7 +34,7 @@ Now install docker-compose:
 ```
 pi@raspberrypi:~ $ sudo apt-get install python-pip
 
-pi@raspberrypi:~ $ pip install docker-compose
+pi@raspberrypi:~ $ sudo pip install docker-compose
 
 ```
 
