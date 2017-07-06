@@ -44,7 +44,7 @@ Note: downloading new images can take some time...
 
 ```
 pi@raspberrypi:~ $ wget https://raw.githubusercontent.com/gost/docker-compose/master/docker-compose-rpi.yml
-pi@raspberrypi:~ $ docker-compose -f docker-compose-rpi.yml up
+pi@raspberrypi:~ $ sudo docker-compose -f docker-compose-rpi.yml up
 ```
 
 ## Check installation
