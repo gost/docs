@@ -72,9 +72,9 @@ $ docker push geodan/gost
 ## Building GOST service Raspberrypi
 
 ```
-docker build -f Dockerfile-rpi -t geodan/rpi-gost .
+pi@raspberrypi:~/dev/go/src/github.com/Geodan/gost $ sudo docker build -f Dockerfile-rpi -t geodan/rpi-gost .
 
-docker push geodan/rpi-gost
+pi@raspberrypi:~/dev/go/src/github.com/Geodan/gost $ sudo docker push geodan/rpi-gost
 ```
 
 ## Removing database
