@@ -173,7 +173,7 @@ $ curl http://localhost:8080/v1.0/Sensors?$filter=concat(name,'!') eq 'sensor na
 - geo.distance
 
 ```
-$ curl http://localhost:8080/v1.0/Locations?$filter=geo.distance(location, geography'POINT(-122, 43)') gt 1 
+$ curl http://localhost:8080/v1.0/Locations?$filter=geo.distance(location, geography'POINT(-122 43)') gt 1 
 ```
 
 - geo.length
