@@ -7,13 +7,13 @@ Samples of supported filtering requests
 - Equals
 
 ```
-$ curl http://localhost:8080/v1.0/Datastream?$filter=name eq 'test1'
+$ curl http://localhost:8080/v1.0/Datastreams?$filter=name eq 'test1'
 ```
 
 - Not Equals
 
 ```
-$ curl http://localhost:8080/v1.0/Datastream?$filter=name ne 'test1'
+$ curl http://localhost:8080/v1.0/Datastreams?$filter=name ne 'test1'
 ```
 
 - Lower than
