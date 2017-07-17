@@ -188,8 +188,6 @@ $ curl http://localhost:8080/v1.0/Locations?$filter=geo.length(location) gt 0
 $ curl http://localhost:8080/v1.0/Locations?$filter=geo.intersects(location, geography'POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))')
 ```
 
-status: Not implemented
-
 ## Spatial Relationship Functions
 
 - st_within 
