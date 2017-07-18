@@ -2,9 +2,11 @@
 
 For getting GOST to work in Docker there are two images available on Docker Hub:
 
-For service and dashboard: [https://hub.docker.com/r/geodan/gost/]
+For server: [https://hub.docker.com/r/geodan/gost/]
 
 For database: [https://hub.docker.com/r/geodan/gost-db/]
+
+For dashboard: [https://hub.docker.com/r/geodan/gost-dashboard/]
 
 For more information about the Docker gost-db image, see [https://github.com/gost/gost-db]
 
