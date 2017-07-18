@@ -8,6 +8,14 @@ Select certain properties of entity in order to reduce the response size
 $ curl http://localhost:8080/v1.0/Things(5)?$select=name,description
 ```
 
+## ordering
+
+Order on property
+
+```
+$ curl http://localhost:8080/v1.0/Things?$orderby=Name asc
+```
+
 ## Expand
 
 Expand sub-entities
