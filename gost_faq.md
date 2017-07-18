@@ -1,5 +1,12 @@
 # GOST FAQ
 
+## SensorThings
+
+Q: What are possible values for Sensor - EncodingType ?
+
+A: 'application/pdf' and 'http://www.opengis.net/doc/IS/SensorML/2.0'
+
+
 ## Docker
 
 q: How to delete all data and start over?
