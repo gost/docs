@@ -16,7 +16,7 @@ Expand sub-entities
 curl http://localhost:8080/v1.0/Things(5)?$expand=Locations,HistoricalLocations
 ```
 
-# Pagination
+## Pagination
 
 return top 2 of things
 
