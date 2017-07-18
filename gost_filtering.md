@@ -243,7 +243,7 @@ $ curl http://localhost:8080/v1.0/Locations?$filter=st_contains(location, geogra
 Relates two geometry, more info about the format see https://en.wikipedia.org/wiki/DE-9IM
 
 ```
-$ curl st_relate(location, geography'POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))', 'T********')
+$ curl http://localhost:8080/v1.0/Locations?$filter=st_relate(location, geography'POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))', 'T********')
 ```
 
 
