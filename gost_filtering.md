@@ -196,48 +196,49 @@ $ curl http://localhost:8080/v1.0/Locations?$filter=geo.intersects(location, geo
 $ curl http://localhost:8080/v1.0/Locations?$filter=st_within(location,geography'POLYGON((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')
 ```
 
-st_intersects
+- st_intersects
 
 ```
 $ curl http://localhost:8080/v1.0/Locations?$filter=st_intersects(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')
 ```
 
-st_equals
+- st_equals
 
 ```
 $ curl http://localhost:8080/v1.0/Locations?$filter=st_equals(location, geography'POINT (-117.123 54.123)')
 ```
 
-st_disjoint
+- st_disjoint
 
 ```
 $ curl http://localhost:8080/v1.0/Locations?$filter=st_disjoint(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')
 ```
-st_touches
+
+- st_touches
 
 ```
 $ curl http://localhost:8080/v1.0/Locations?$filter=st_touches(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')
 ```
 
-st_overlaps
+- st_overlaps
 
 ```
 $ curl http://localhost:8080/v1.0/Locations?$filter=st_overlaps(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')
 ```
 
-st_crosses
+- st_crosses
 
 ```
 $ curl http://localhost:8080/v1.0/Locations?$filter=st_crosses(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')
 ```
 
-st_contains
+- st_contains
 
 ```
 $ curl http://localhost:8080/v1.0/Locations?$filter=st_contains(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')
 ```
 
-st_relate
+- st_relate
 
 from doc: st_relate(location, geography'POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))', 'T********')
 
