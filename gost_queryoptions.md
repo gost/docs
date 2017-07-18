@@ -37,7 +37,7 @@ Count the number of things
 curl http://localhost:8080/v1.0/Things/$count
 ```
 
-For the various filter option see <a href="gost_filtering.md">gost_filtering</a>.
+For the various filter options see <a href="gost_filtering.md">gost_filtering</a>.
 
 
 
