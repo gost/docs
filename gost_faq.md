@@ -6,6 +6,18 @@ Q: What are possible values for Sensor - EncodingType ?
 
 A: 'application/pdf' and 'http://www.opengis.net/doc/IS/SensorML/2.0'
 
+Q: What are possible values for Datastream - ObservationType
+
+A: 
+
+| O&M 2.0                | Value Code Value (observationType names)                                     | Content of result |
+|------------------------|------------------------------------------------------------------------------|-------------------|
+| OM_CategoryObservation | http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_CategoryObservation | URI               |
+| OM_CountObservation    | http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_CountObservation    | integer           |
+| OM_Measurement         | http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement         | double            |
+| OM_Observation         | http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Observation         | Any               |
+| OM_TruthObservation    | http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_TruthObservation    | boolean           |
+
 
 ## Docker
 
