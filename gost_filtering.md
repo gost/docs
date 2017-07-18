@@ -343,9 +343,18 @@ $ curl http://localhost:8080/v1.0/Observations?$filter=floor(result) eq 10
 $ curl http://localhost:8080/v1.0/Observations?$filter=ceiling(result) eq 10
 ```
 
+## Filter on related entities
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$filter=Datastream/id eq ‘1’
+```
+
+Status: not implemented
+
 ## Type functions
 
 isOf
 
 status: not implemented
+
 
