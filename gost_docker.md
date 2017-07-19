@@ -26,7 +26,7 @@ $ docker-compose -f docker-compose-0.5.yml up
 ```
 
 ## Running GOST with docker run
-- Start geodan/gost-db which creates a user postgres with password postgres and initialises a database named gost</br>
+- Start geodan/gost-db which creates an user postgres with password postgres and initialises a database named gost</br>
 - Start geodan/gost and set info to connect to gost-db, gost will be available at http://localhost:8080/v1.0</br>
 - Start geodan/gost-dashboard and link gost to use GOST trough nginx, gost + dashboard available at http://localhost:8081
 
