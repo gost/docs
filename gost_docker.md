@@ -32,7 +32,7 @@ $ docker-compose -f docker-compose-0.5.yml up
 
 ```
 $ docker run -d -p 5432:5432 -e POSTGRES_DB=gost -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --name gost-db geodan/gost-db</br>
-$ docker run -d -p 8080:8080 --link gost-db:gost-db -e gost_db_host=gost-db -e gost_db_username=postgres -e gost_db_password=postgres --name gost geodan/gost</br>
+$ docker run -d -p 8080:8080 --link gost-db:gost-db -e gost_db_host=gost-db -e gost_db_user=postgres -e gost_db_password=postgres --name gost geodan/gost</br>
 $ docker run -d -p 8081:8080 --link gost:gost --name gost-dashboard geodan/gost-dashboard		
 ```
 
