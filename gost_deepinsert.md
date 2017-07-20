@@ -5,7 +5,7 @@ With the Deep Insert functionality of SensorThings API its possible to create mu
 - Create Datastream with ObservedProperty and Sensor for Thing.@iot_id=1
 
 ```
-$ curl -X POST - h "content-type:application/json" localhost:8080/v1.0/Datastreams
+$ curl -X POST -H "content-type:application/json" http://localhost:8080/v1.0/Datastreams
 
 body:
 
@@ -32,4 +32,27 @@ body:
          "Thing": {"@iot.id": "1"}
 }
 
+```
+
+- Create Observation with FeatureOfInterest
+
+```
+$ curl -X POST  -H "content-type:application/json" http://localhost:8080/v1.0/Observations
+
+body:
+
+{
+  "phenomenonTime": "2015-04-13T00:00:00+02:00",
+  "result" : 38,
+  "Datastream":{"@iot.id":"2"},
+  "FeatureOfInterest": {
+    "name": "Awesome FOI",
+    "description": "Underground Air Quality in NYC train tunnels",
+    "encodingType": "application/vnd.geo+json",
+    "feature": {
+        "coordinates": [51.08386,-114.13036],
+        "type": "Point"
+      }
+  }
+}
 ```
