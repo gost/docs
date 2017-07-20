@@ -1,0 +1,35 @@
+# SensorThings Deep Insert API
+
+With the Deep Insert functionality of SensorThings API its possible to create multiple entities in one request.
+
+- Create Datastream with ObservedProperty and Sensor for Thing.@iot_id=1
+
+```
+$ curl -X POST - h "content-type:application/json" localhost:8080/v1.0/Datastreams
+
+body:
+
+{
+    "name": "DS3",
+    "unitOfMeasurement": {
+            "name": "Celsius",
+            "symbol": "C",
+            "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius"
+        },
+        "description": "Temperature measurement",
+        "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+        "ObservedProperty": {
+            "name": "Temperature",
+            "definition": "http://www.qudt.org/qudt/owl/1.0.0/quantity/Instances.html#Temperature",
+            "description": "Temperature of the camping site"
+        },
+        "Sensor": {
+            "name": "My Sensor",
+            "description": "SensorUp Tempomatic 1000-b",
+            "encodingType": "application/pdf",
+            "metadata": "Calibration date:  Jan 11, 2015"
+        },
+         "Thing": {"@iot.id": "1"}
+}
+
+```
