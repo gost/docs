@@ -24,6 +24,12 @@ Expand sub-entities
 $ curl http://localhost:8080/v1.0/Things(5)?$expand=Locations,HistoricalLocations
 ```
 
+Select thing with id 5 and expand the corresponding locations and datastreams with observations
+
+```
+$ curl http://localhost:8080/v1.0/Things(5)?$expand=Locations,Datastreams/Observations
+```
+
 ## Pagination
 
 return top 2 of things
