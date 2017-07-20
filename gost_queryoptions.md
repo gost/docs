@@ -38,6 +38,11 @@ Skip the first 3 things
 $ curl http://localhost:8080/v1.0/Things?$skip=3
 ```
 
+return 5 observations skipping the latest 10
+
+```
+$ curl http://localhost:8080/v1.0/Observations?$top=5$skip=10
+```
 
 Return results with/without count
 
