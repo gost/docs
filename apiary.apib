@@ -3,7 +3,9 @@ HOST: http://localhost
 
 # gost
 
-GOST (Go-SensorThings) is an IoT Platform written in Golang (Go). It implements the Sensing profile (part 1) of the [OGC SensorThings API] (http://ogc-iot.github.io/ogc-iot-api/api.html) standard. The OGC SensorThings API provides an open standard-based and geospatial-enabled framework to interconnect the Internet of Things devices, data, and applications over the Web. Official OGC documentation can be found here: http://docs.opengeospatial.org/is/15-078r6/15-078r6.html
+GOST (Go-SensorThings) is an IoT Platform written in Golang (Go). It implements the Sensing profile (part 1) of the OGC SensorThings API. 
+The OGC SensorThings API provides an open standard-based and geospatial-enabled framework to interconnect the Internet of Things devices, data, and applications over the Web. 
+Official OGC documentation can be found here: http://docs.opengeospatial.org/is/15-078r6/15-078r6.html
 
 **Paging**  
 Responses that include only a partial set of the items identified by the request URL contain a link that allows retrieving the next partial set of items. This link is called a nextLink; its representation is format-specific. The final partial set of items shall not contain a nextLink.
@@ -13,6 +15,7 @@ SensorThings clients shall treat the URL of the nextLink as opaque, and shall no
 ## Version [/version]
 
 ### Get version info [GET]
+Retrieve the current running GOST server and SensorThings API version
 
 + Response 200 (application/json)
 
