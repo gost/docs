@@ -1,0 +1,4022 @@
+FORMAT: 1A
+HOST: http://localhost
+
+# gost
+
+GOST (Go-SensorThings) is an IoT Platform written in Golang (Go). It implements the Sensing profile (part 1) of the [OGC SensorThings API] (http://ogc-iot.github.io/ogc-iot-api/api.html) standard. The OGC SensorThings API provides an open standard-based and geospatial-enabled framework to interconnect the Internet of Things devices, data, and applications over the Web. Official OGC documentation can be found here: http://docs.opengeospatial.org/is/15-078r6/15-078r6.html
+
+**Paging**  
+Responses that include only a partial set of the items identified by the request URL contain a link that allows retrieving the next partial set of items. This link is called a nextLink; its representation is format-specific. The final partial set of items shall not contain a nextLink.
+The nextLink annotation indicates that a response is only a subset of the requested collection of entities or collection of entity references. It contains a URL that allows retrieving the next subset of the requested collection.
+SensorThings clients shall treat the URL of the nextLink as opaque, and shall not append system query options to the URL of a next link. Services may not allow a change of format on requests for subsequent pages using the next link.
+
+## Version [/version]
+
+### Get version info [GET]
+
++ Response 200 (application/json)
+
+    + Body 
+    
+            {
+               "gostServerVersion": {
+                  "version": "v0.5"
+               },
+               "sensorThingsApiVersion": {
+                  "version": "v1.0"
+               }
+            }
+
+## Root [/v1.0]
+Access to all resources begins at the base resource path.
+Navigating to the base resource path will return a JSON array of the available SensorThings resource endpoints.
+
+### Get SensorThings resource endpoints [GET]
+
++ Response 200 (application/json)
+
+            {
+               "value": [
+                  {
+                     "name": "Things",
+                     "url": "http://localhost/v1.0/Things"
+                  },
+                  {
+                     "name": "Datastreams",
+                     "url": "http://localhost/v1.0/Datastreams"
+                  },
+                  {
+                     "name": "ObservedProperties",
+                     "url": "http://localhost/v1.0/ObservedProperties"
+                  },
+                  {
+                     "name": "HistoricalLocations",
+                     "url": "http://localhost/v1.0/HistoricalLocations"
+                  },
+                  {
+                     "name": "Locations",
+                     "url": "http://localhost/v1.0/Locations"
+                  },
+                  {
+                     "name": "Sensors",
+                     "url": "http://localhost/v1.0/Sensors"
+                  },
+                  {
+                     "name": "Observations",
+                     "url": "http://localhost/v1.0/Observations"
+                  },
+                  {
+                     "name": "FeaturesOfInterest",
+                     "url": "http://localhost/v1.0/FeaturesOfInterest"
+                  }
+               ]
+            }
+        
+## Things [/v1.0/Things]
+Thing in SensorThings represents a physical object in the real world. A Thing is a good starting
+point in which to start creating the SensorThings model structure. A Thing has a Location and one or
+more Datastreams to collect Observations. A minimal Thing can be created without a Location and Datastream
+and there are options to create a Things with a nested linked Location and Datastream.  
+  
+| Property | Required | Type | Definition |
+|:---------|----------|------|-------------|
+|`name`|mandatory|string|A property provides a label for Thing entity, commonly a descriptive name|
+|`description`|mandatory|string|This is a short description of the corresponding Thing entity|
+|`properties`|optional|JSON object|A JSON Object containing user-annotated properties as key-value pairs|
+
+| Related entity | Required |
+|:---------|----------|
+|`Locations`|optional|
+|`HistoricalLocations`|optional|
+|`Datastreams`|optional|
+
+### Get Things [GET]
+
++ Request
+Retrieve all Things.  
+
+    + Body
+    
++ Response 200 (application/json)
+
+        {
+           "@iot.count": 2,
+           "value": [
+               {
+                    "@iot.id": 2,
+                    "@iot.selfLink": "http://localhost/v1.0/Things(2)",
+                    "name": "Netatmo 2",
+                    "description": "Netatmo PK",
+                    "properties": {
+                        "organisation": "Geodan",
+                        "owner": "Henk"
+                    },
+                    "Locations@iot.navigationLink": "http://localhost/v1.0/Things(2)/Locations",
+                    "Datastreams@iot.navigationLink": "http://localhost/v1.0/Things(2)/Datastreams",
+                    "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Things(2)/HistoricalLocations"
+                },
+                {
+                    "@iot.id": 1,
+                    "@iot.selfLink": "http://localhost/v1.0/Things(1)",
+                    "name": "Netatmo 1",
+                    "description": "Netatmo VZ",
+                    "properties": {
+                        "organisation": "Geodan",
+                        "owner": "Tim"
+                    },
+                    "Locations@iot.navigationLink": "http://localhost/v1.0/Things(1)/Locations",
+                    "Datastreams@iot.navigationLink": "http://localhost/v1.0/Things(1)/Datastreams",
+                    "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Things(1)/HistoricalLocations"
+                }
+            ]
+        }
+
+### Get Thing by id [GET /v1.0/Things({id})]
+
++ Parameters
+    + id (number) - id of the Thing to retrieve
+
++ Request
+Retrieve a specific Thing by given id.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Things(1)",
+                "name": "Netatmo 1",
+                "description": "Netatmo VZ",
+                "properties": {
+                    "organisation": "Geodan",
+                    "owner": "Tim"
+                },
+                "Locations@iot.navigationLink": "http://localhost/v1.0/Things(1)/Locations",
+                "Datastreams@iot.navigationLink": "http://localhost/v1.0/Things(1)/Datastreams",
+                "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Things(1)/HistoricalLocations"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "Thing not found"
+                    ]
+                }
+            }
+
+### Get Things by Location [GET /v1.0/Locations({id})/Things]
++ Parameters
+    + id (number) - ID of the Location to retrieve the things for
+
++ Request
+Get all Things related to the specified Location
+
+    + Body
+
++ Response 200 (application/json)
+
+           {
+               "@iot.count": 1,
+               "value": [
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Things(1)",
+                        "name": "Netatmo 1",
+                        "description": "Netatmo VZ",
+                        "properties": {
+                            "organisation": "Geodan",
+                            "owner": "Tim"
+                        },
+                        "Locations@iot.navigationLink": "http://localhost/v1.0/Things(1)/Locations",
+                        "Datastreams@iot.navigationLink": "http://localhost/v1.0/Things(1)/Datastreams",
+                        "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Things(1)/HistoricalLocations"
+                    }
+                ]
+            }
+
+### Get Thing by HistoricalLocation  [GET /v1.0/HistoricalLocations({id})/Thing]
++ Parameters
+    + id (number) - ID of the HistoricalLocations to retrieve the Thing for
+
++ Request
+Get Thing related to the specified HistoricalLocation
+
+    + Body
+
++ Response 200 (application/json)
+
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Things(1)",
+                "name": "Netatmo 1",
+                "description": "Netatmo VZ",
+                "properties": {
+                    "organisation": "Geodan",
+                    "owner": "Tim"
+                },
+                "Locations@iot.navigationLink": "http://localhost/v1.0/Things(1)/Locations",
+                "Datastreams@iot.navigationLink": "http://localhost/v1.0/Things(1)/Datastreams",
+                "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Things(1)/HistoricalLocations"
+            }
+
+### Get Thing by Datastream  [GET /v1.0/Datastreams({id})/Thing]
++ Parameters
+    + id (number) - ID of the Datastream to retrieve the Thing for
+
++ Request
+Get Thing related to the specified Datastream
+
+    + Body
+
++ Response 200 (application/json)
+
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Things(1)",
+                "name": "Netatmo 1",
+                "description": "Netatmo VZ",
+                "properties": {
+                    "organisation": "Geodan",
+                    "owner": "Tim"
+                },
+                "Locations@iot.navigationLink": "http://localhost/v1.0/Things(1)/Locations",
+                "Datastreams@iot.navigationLink": "http://localhost/v1.0/Things(1)/Datastreams",
+                "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Things(1)/HistoricalLocations"
+            }
+        
+### Post Thing [POST]
+
++ Request (application/json)
+Add a new Thing to the Things collection
+
+    + Body
+    
+            {
+                "name": "Netatmo 1",
+                "description": "Netatmo VZ",
+                "properties": {
+                    "organisation": "Geodan",
+                    "owner": "Tim"
+                }
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/Things(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Things(1)",
+                "name": "Netatmo 1",
+                "description": "Netatmo VZ",
+                "properties": {
+                    "organisation": "Geodan",
+                    "owner": "Tim"
+                },
+                "Locations@iot.navigationLink": "http://localhost/v1.0/Things(1)/Locations",
+                "Datastreams@iot.navigationLink": "http://localhost/v1.0/Things(1)/Datastreams",
+                "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Things(1)/HistoricalLocations"
+            }
+
+### Post Thing with new Location [POST]
+
++ Request (application/json)
+Add a new Thing to the Things collection including a new Location
+
+    + Body
+    
+            {
+                "name": "Netatmo 1",
+                "description": "Netatmo VZ",
+                "properties": {
+                    "organisation": "Geodan",
+                    "owner": "Tim"
+                },
+                "Locations": [
+                    {
+                        "name": "President Kennedylaan 1",
+                        "description": "Geodan building Amsterdam",
+                        "encodingType": "application/vnd.geo+json",
+                        "location": {
+                            "type": "Point",
+                            "coordinates": [4.91320,
+                            52.34227]
+                        }
+                    }
+                ]
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/Things(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Things(1)",
+                "name": "Netatmo 1",
+                "description": "Netatmo VZ",
+                "properties": {
+                    "organisation": "Geodan",
+                    "owner": "Tim"
+                },
+                "Datastreams@iot.navigationLink": "http://localhost/v1.0/Things(1)/Datastreams",
+                "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Things(1)/HistoricalLocations",
+                "Locations": [
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Locations(1)",
+                        "name": "President Kennedylaan 1",
+                        "description": "Geodan building Amsterdam",
+                        "encodingType": "application/vnd.geo+json",
+                        "location": {
+                            "type": "Point",
+                            "coordinates": [4.91320,
+                            52.34227]
+                        },
+                        "Things@iot.navigationLink": "http://localhost/v1.0/Locations(1)/Things",
+                        "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Locations(1)/HistoricalLocations"
+                    }
+                ]
+            }
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Bad Request",
+                    "code": 400,
+                    "message": [
+                        "Missing mandatory parameter: ....."
+                    ]
+                }
+            }
+
+### Post Thing with existing Location [POST]
+
++ Request (application/json)
+Add a new Thing to the Things collection linking an existing Location to it
+
+    + Body
+    
+            {
+                "name": "Netatmo 1",
+                "description": "Netatmo VZ",
+                "properties": {
+                    "organisation": "Geodan",
+                    "owner": "Tim"
+                },
+                "Locations": [
+                    {"@iot.id":"1"}
+                ]
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/Things(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Things(1)",
+                "name": "Netatmo 1",
+                "description": "Netatmo VZ",
+                "properties": {
+                    "organisation": "Geodan",
+                    "owner": "Tim"
+                },
+                "Datastreams@iot.navigationLink": "http://localhost/v1.0/Things(1)/Datastreams",
+                "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Things(1)/HistoricalLocations",
+                "Locations": [
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Locations(1)",366
+                        "Things@iot.navigationLink": "http://localhost/v1.0/Locations(1)/Things",
+                        "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Locations(1)/HistoricalLocations"
+                    }
+                ]
+            }
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Bad Request",
+                    "code": 400,
+                    "message": [
+                        "Location does not exist",
+                    ]
+                }
+            }
+
+### Post Thing ULTIMATE [POST]
+
++ Request (application/json)
+Add a new Thing with Location and Datastream including a new Sensor, ObservedProperty and Observation
+
+    + Body
+    
+            {
+                "name": "Netatmo 1",
+                "description": "Netatmo VZ",
+                "properties": {
+                    "organisation": "Geodan",
+                    "owner": "Tim"
+                },
+                "Locations": [
+                    {
+                        "name": "President Kennedylaan 1",
+                        "description": "Geodan building Amsterdam",
+                        "encodingType": "application/vnd.geo+json",
+                        "location": {
+                            "type": "Point",
+                            "coordinates": [4.91320,
+                            52.34227]
+                        }
+                    }
+                ],
+                "Datastreams": [{
+                    "name": "Temperature",
+                    "unitOfMeasurement": {
+                        "name": "Celsius",
+                        "symbol": "C",
+                        "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius"
+                    },
+                    "description": "Temperature measurement",
+                    "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                    "ObservedProperty": {
+                        "name": "Temperature",
+                        "definition": "http://www.qudt.org/qudt/owl/1.0.0/quantity/Instances.html#Temperature",
+                        "description": "Temperature in situ"
+                    },
+                    "Sensor": {
+                        "name": "DHT22",
+                        "description": "Digital temperature and humidity sensor",
+                        "encodingType": "application/pdf",
+                        "metadata": "https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf"
+                    },
+                    "Observations": [
+                            {
+                              "phenomenonTime": "2017-07-21T11:48:21.321Z",
+                              "resultTime" : "2017-07-21T11:48:21.321Z",
+                              "result" : 38
+                            }
+                        ]
+                }]
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/Things(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost:8080/v1.0/Things(1)",
+                "name": "Netatmo 1",
+                "description": "Netatmo VZ",
+                "properties": {
+                    "organisation": "Geodan",
+                    "owner": "Tim"
+                },
+                "HistoricalLocations@iot.navigationLink": "http://localhost:8080/v1.0/Things(1)/HistoricalLocations",
+                "Locations": [
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost:8080/v1.0/Locations(1)",
+                        "name": "President Kennedylaan 1",
+                        "description": "Geodan building Amsterdam",
+                        "encodingType": "application/vnd.geo+json",
+                        "location": {
+                            "coordinates": [
+                                4.9132,
+                                52.34227
+                            ],
+                            "type": "Point"
+                        },
+                        "Things@iot.navigationLink": "http://localhost:8080/v1.0/Locations(1)/Things",
+                        "HistoricalLocations@iot.navigationLink": "http://localhost:8080/v1.0/Locations(1)/HistoricalLocations"
+                    }
+                ],
+                "Datastreams": [
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost:8080/v1.0/Datastreams(1)",
+                        "name": "Temperature",
+                        "description": "Temperature measurement",
+                        "unitOfMeasurement": {
+                            "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                            "name": "Celsius",
+                            "symbol": "C"
+                        },
+                        "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                        "Thing@iot.navigationLink": "http://localhost:8080/v1.0/Datastreams(1)/Thing",
+                        "Sensor@iot.navigationLink": "http://localhost:8080/v1.0/Datastreams(1)/Sensor",
+                        "ObservedProperty@iot.navigationLink": "http://localhost:8080/v1.0/Datastreams(1)/ObservedProperty",
+                        "Observations": [
+                            {
+                                "@iot.id": 1,
+                                "@iot.selfLink": "http://localhost:8080/v1.0/Observations(1)",
+                                "phenomenonTime": "2017-07-21T11:48:21.321Z",
+                                "result": 38,
+                                "Datastream@iot.navigationLink": "http://localhost:8080/v1.0/Observations(1)/Datastream",
+                                "FeatureOfInterest@iot.navigationLink": "http://localhost:8080/v1.0/Observations(1)/FeatureOfInterest",
+                                "resultTime": "2017-07-21T11:48:21.321Z"
+                            }
+                        ]
+                    }
+                ]
+            }
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Bad Request",
+                    "code": 400,
+                    "message": [
+                        ...,
+                    ]
+                }
+            }
+
+### Patch Thing [PATCH /v1.0/Things({id})]
+
++ Parameters
+    + id (number) - ID of Thing to patch
+
++ Request (application/json)
+Patch a specified Thing
+
+    + Body
+    
+            {
+                "name": "ALL YOUR BASE",
+            }
+            
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "@iot.id": 1,
+                "name": "ALL YOUR BASE",
+                "description": "Netatmo VZ",
+                "properties": {
+                    "organisation": "Geodan",
+                    "owner": "Tim"
+                }
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "thing not found"
+                    ]
+                }
+            }
+            
+### Delete Thing [DELETE /v1.0/Things({id})]
+
++ Parameters
+    + id (number) - ID of thing to delete
+    
++ Response 200 (application/json)
+Delete a specified Thing from the Things collection
+
+    + Body
+    
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "thing not found"
+                    ]
+                }
+            }
+            
+## Locations [/v1.0/Locations]
+The Location entity locates the Thing(s) it associated with. A Thing’s Location entity is defined as the last known location of the Thing. 
+A Thing can have multiple Locations if all Locations are different representations of same Location with different encodingType. 
+ 
+| Property | Required | Type | Definition |
+|:---------|----------|------|-------------|
+|`name`|mandatory|string|A property provides a label for Location entity, commonly a descriptive name|
+|`description`|mandatory|string|The description about the Location|
+|`encodingType`|mandatory|ValueCode|The encoding type of the Location property. Its value is one of the ValueCode enumeration|
+|`location`|mandatory|Any (Depends on encodingType)|The location type is defined by encodingType|
+
+| encodingType ValueCodes | Type |
+|:---------|---------|
+|`application/vnd.geo+json`|GeoJSON|
+
+| Related entity | Required |
+|:---------|----------|
+|`Things`|optional|
+|`HistoricalLocations`|optional|
+
+### Get Locations [GET]
+
++ Request
+Retrieve all Locations.  
+
+    + Body
+    
++ Response 200 (application/json)
+
+        {
+           "@iot.count": 2,
+           "value": [
+                {
+                    "@iot.id": 2,
+                    "@iot.selfLink": "http://localhost/v1.0/Locations(2)",
+                    "name": "Buitenhaven 27-A",
+                    "description": "Geodan building 's-Hertogenbosch",
+                    "encodingType": "application/vnd.geo+json",
+                    "location": {
+                        "type": "Point",
+                        "coordinates": [5.29969,
+                        51.69176]
+                    },
+                    "Things@iot.navigationLink": "http://localhost/v1.0/Locations(2)/Things",
+                    "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Locations(2)/HistoricalLocations"
+                },
+                {
+                    "@iot.id": 1,
+                    "@iot.selfLink": "http://localhost/v1.0/Locations(1)",
+                    "name": "President Kennedylaan 1",
+                    "description": "Geodan building Amsterdam",
+                    "encodingType": "application/vnd.geo+json",
+                    "location": {
+                        "type": "Point",
+                        "coordinates": [4.91320,
+                        52.34227]
+                    },
+                    "Things@iot.navigationLink": "http://localhost/v1.0/Locations(1)/Things",
+                    "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Locations(1)/HistoricalLocations"
+                }
+            ]
+        }
+
+### Get Location by id [GET /v1.0/Locations({id})]
+
++ Parameters
+    + id (number) - id of the Location to retrieve
+
++ Request
+Retrieve a specific Location by given id.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Locations(1)",
+                "name": "President Kennedylaan 1",
+                "description": "Geodan building Amsterdam",
+                "encodingType": "application/vnd.geo+json",
+                "location": {
+                    "type": "Point",
+                    "coordinates": [4.91320,
+                    52.34227]
+                },
+                "Things@iot.navigationLink": "http://localhost/v1.0/Locations(1)/Things",
+                "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Locations(1)/HistoricalLocations"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "location not found"
+                    ]
+                }
+            }
+
+### Get Locations by Thing [GET /v1.0/Things({id})/Locations]
+
++ Parameters
+    + id (number) - id of the Thing to retrieve Locations for
+
++ Request
+Retrieve locations by specified Thing
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.count": 1,
+                "value": [
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Locations(1)",
+                        "name": "President Kennedylaan 1",
+                        "description": "Geodan building",
+                        "encodingType": "application/vnd.geo+json",
+                        "location": {
+                            "coordinates": [
+                                4.9132,
+                                52.34227
+                            ],
+                            "type": "Point"
+                        },
+                        "Things@iot.navigationLink": "http://localhost/v1.0/Locations(1)/Things",
+                        "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Locations(1)/HistoricalLocations"
+                    }
+                ]
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "Thing not found"
+                    ]
+                }
+            }
+            
+### Get Locations by HistoricalLocations [GET /v1.0/HistoricalLocations({id})/Locations]
+
++ Parameters
+    + id (number) - id of the HistoricalLocation to retrieve Locations for
+
++ Request
+Retrieve locations by specified HistoricalLocation
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.count": 1,
+                "value": [
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Locations(1)",
+                        "name": "President Kennedylaan 1",
+                        "description": "Geodan building",
+                        "encodingType": "application/vnd.geo+json",
+                        "location": {
+                            "coordinates": [
+                                4.9132,
+                                52.34227
+                            ],
+                            "type": "Point"
+                        },
+                        "Things@iot.navigationLink": "http://localhost/v1.0/Locations(1)/Things",
+                        "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Locations(1)/HistoricalLocations"
+                    }
+                ]
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "HistoricalLocation not found"
+                    ]
+                }
+            }
+
+### Post Location [POST]
+
++ Request (application/json)
+Add a new Location to the Locations collection
+
+    + Body
+    
+            {
+                "name": "President Kennedylaan 1",
+                "description": "Geodan building",
+                "encodingType": "application/vnd.geo+json",
+                "location": {
+                    "coordinates": [
+                        4.9132,
+                        52.34227
+                    ],
+                    "type": "Point"
+                },
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/Locations(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Locations(1)",
+                "name": "President Kennedylaan 1",
+                "description": "Geodan building",
+                "encodingType": "application/vnd.geo+json",
+                "location": {
+                    "coordinates": [
+                        4.9132,
+                        52.34227
+                    ],
+                    "type": "Point"
+                },
+                "Things@iot.navigationLink": "http://localhost/v1.0/Locations(1)/Things",
+                "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Locations(1)/HistoricalLocations"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Bad Request",
+                    "code": 400,
+                    "message": [
+                        "Missing mandatory parameter: ....."
+                    ]
+                }
+            }
+            
+### Post Location by Thing [POST /v1.0/Things({id})/Locations]
+
++ Request (application/json)
+Add a new Location and link to Thing
+
+    + Body
+    
+            {
+                "name": "President Kennedylaan 1",
+                "description": "Geodan building",
+                "encodingType": "application/vnd.geo+json",
+                "location": {
+                    "coordinates": [
+                        4.9132,
+                        52.34227
+                    ],
+                    "type": "Point"
+                },
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/Locations(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Locations(1)",
+                "name": "President Kennedylaan 1",
+                "description": "Geodan building",
+                "encodingType": "application/vnd.geo+json",
+                "location": {
+                    "coordinates": [
+                        4.9132,
+                        52.34227
+                    ],
+                    "type": "Point"
+                },
+                "Things@iot.navigationLink": "http://localhost/v1.0/Locations(1)/Things",
+                "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Locations(1)/HistoricalLocations"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Bad Request",
+                    "code": 400,
+                    "message": [
+                        "Missing mandatory parameter: ....."
+                    ]
+                }
+            }
+
+### Patch Location [PATCH /v1.0/Locations({id})]
+
++ Parameters
+    + id (number) - ID of Location to patch
+
++ Request (application/json)
+Patch a specified Location
+
+    + Body
+    
+            {
+                "name": "ALL YOUR BASE",
+            }
+            
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "@iot.id": 1,
+                "name": "ALL YOUR BASE",
+                "description": "Geodan building",
+                "encodingType": "application/vnd.geo+json",
+                "location": {
+                    "coordinates": [
+                        4.9132,
+                        52.34227
+                    ],
+                    "type": "Point"
+                }
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "location not found"
+                    ]
+                }
+            }
+            
+### Delete Location [DELETE /v1.0/Locations({id})]
+
++ Parameters
+    + id (number) - ID of Location to delete
+    
++ Response 200 (application/json)
+Delete a specified Location from the Locations collection
+
+    + Body
+    
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "location not found"
+                    ]
+                }
+            }
+            
+## HistoricalLocations [/v1.0/HistoricalLocations]
+A Thing’s HistoricalLocation entity set provides the times of the current (i.e., last known) and previous locations of the Thing.
+A HistoricalLocation is created automatically by the server when posting a new location.
+  
+| Property | Required | Type | Definition |
+|:---------|----------|------|-------------|
+|`time`|mandatory|string|The time when the Thing is known at the Location|
+
+| Related entity | Required |
+|:---------|----------|
+|`Thing`|mandatory|
+|`Locations`|mandatory|
+
+### Get HistoricalLocations [GET]
+
++ Request
+Retrieve all Locations.  
+
+    + Body
+    
++ Response 200 (application/json)
+
+            {
+                "@iot.count": 2,
+                "value": [
+                    {
+                        "@iot.id": 2,
+                        "@iot.selfLink": "http://localhost/v1.0/HistoricalLocations(2)",
+                        "time": "2017-07-21T09:30:52.845Z",
+                        "Thing@iot.navigationLink": "http://localhost/v1.0/HistoricalLocations(2)/Thing",
+                        "Locations@iot.navigationLink": "http://localhost/v1.0/HistoricalLocations(2)/Locations"
+                    },
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/HistoricalLocations(1)",
+                        "time": "2017-07-21T13:01:09.576Z",
+                        "Thing@iot.navigationLink": "http://localhost/v1.0/HistoricalLocations(1)/Thing",
+                        "Locations@iot.navigationLink": "http://localhost/v1.0/HistoricalLocations(1)/Locations"
+                    }
+                ]
+            }
+
+
+### Get HistoricalLocation by id [GET /v1.0/HistoricalLocations({id})]
+
++ Parameters
+    + id (number) - id of the HistoricalLocation to retrieve
+
++ Request
+Retrieve a specific HistoricalLocation by given id.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/HistoricalLocations(1)",
+                "time": "2017-07-21T13:01:09.576Z",
+                "Thing@iot.navigationLink": "http://localhost/v1.0/HistoricalLocations(1)/Thing",
+                "Locations@iot.navigationLink": "http://localhost/v1.0/HistoricalLocations(1)/Locations"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "HistoricalLocation not found"
+                    ]
+                }
+            }
+
+### Get HistoricalLocations by Thing [GET /v1.0/Things({id})/HistoricalLocations]
+
++ Parameters
+    + id (number) - id of the Thing to retrieve HistoricalLocations for
+
++ Request
+Retrieve HistoricalLocations by specified Thing
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.count": 2,
+                "value": [
+                    {
+                        "@iot.id": 2,
+                        "@iot.selfLink": "http://localhost/v1.0/HistoricalLocations(2)",
+                        "time": "2017-07-21T09:30:52.845Z",
+                        "Thing@iot.navigationLink": "http://localhost/v1.0/HistoricalLocations(2)/Thing",
+                        "Locations@iot.navigationLink": "http://localhost/v1.0/HistoricalLocations(2)/Locations"
+                    },
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/HistoricalLocations(1)",
+                        "time": "2017-07-21T13:01:09.576Z",
+                        "Thing@iot.navigationLink": "http://localhost/v1.0/HistoricalLocations(1)/Thing",
+                        "Locations@iot.navigationLink": "http://localhost/v1.0/HistoricalLocations(1)/Locations"
+                    }
+                ]
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "Thing not found"
+                    ]
+                }
+            }
+
+### Get HistoricalLocations by Location [GET /v1.0/Locations({id})/HistoricalLocations]
+
++ Parameters
+    + id (number) - id of the Location to retrieve HistoricalLocations for
+
++ Request
+Retrieve HistoricalLocations by specified Location
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.count": 1,
+                "value": [
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/HistoricalLocations(1)",
+                        "time": "2017-07-21T13:01:09.576Z",
+                        "Thing@iot.navigationLink": "http://localhost/v1.0/HistoricalLocations(1)/Thing",
+                        "Locations@iot.navigationLink": "http://localhost/v1.0/HistoricalLocations(1)/Locations"
+                    }
+                ]
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "Thing not found"
+                    ]
+                }
+            }
+
+### Post HistoricalLocation [POST /v1.0/HistoricalLocations]
+
++ Request (application/json)
+Add a new HistoricalLocation to the HistoricalLocations collection
+
+    + Body
+    
+            {
+                "time": "2017-07-21T12:12:12.100Z",
+                "Thing":{"@iot.id": 1 },
+                "Locations": [{"@iot.id": 1}]
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/HistoricalLocations(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/HistoricalLocations(1)",
+                "time": "2017-07-21T12:12:12.100Z",
+                "Locations@iot.navigationLink": "http://localhost/v1.0/HistoricalLocations(1)/Locations",
+                "Thing": {
+                    "@iot.id": 1,
+                    "@iot.selfLink": "http://localhost/v1.0/Things(1)",
+                    "Locations@iot.navigationLink": "http://localhost/v1.0/Things(1)/Locations",
+                    "Datastreams@iot.navigationLink": "http://localhost/v1.0/Things(1)/Datastreams",
+                    "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Things(1)/HistoricalLocations"
+                }
+            }
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Bad Request",
+                    "code": 400,
+                    "message": [
+                        "Missing mandatory parameter: ....."
+                    ]
+                }
+            }
+
+### Patch HistoricalLocation [PATCH /v1.0/HistoricalLocations({id})]
+
++ Parameters
+    + id (number) - ID of HistoricalLocation to patch
+
++ Request (application/json)
+Patch a specified Location
+
+    + Body
+    
+            {
+                "time": "2012-12-12T12:12:12.112Z"
+            }
+            
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "@iot.id": 1,
+                "time": "2012-12-12T12:12:12.112Z"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "HistoricalLocation not found"
+                    ]
+                }
+            }
+            
+### Delete Location [DELETE /v1.0/HistoricalLocations({id})]
+
++ Parameters
+    + id (number) - ID of HistoricalLocation to delete
+    
++ Response 200 (application/json)
+Delete a specified HistoricalLocation from the HistoricalLocations collection
+
+    + Body
+    
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "HistoricalLocation not found"
+                    ]
+                }
+            }
+
+## Datastreams [/v1.0/Datastreams]
+A Datastream groups a collection of Observations measuring the same ObservedProperty and produced by the same Sensor.
+ 
+| Property | Required | Type | Definition |
+|:---------|----------|------|-------------|
+|`name`|mandatory|string|A property provides a label for Datastream entity, commonly a descriptive name|
+|`description`|mandatory|string|The description of the Datastream entity|
+|`unitOfMeasurement`|mandatory|JSON Object|A JSON Object containing three key-value pairs. The name property presents the full name of the unitOfMeasurement; the symbol property shows the textual form of the unit symbol; and the definition contains the URI defining the unitOfMeasurement.The values of these properties SHOULD follow the Unified Code for Unit of Measure (UCUM)|
+|`observationType`|mandatory|ValueCode|The type of Observation (with unique result type), which is used by the service to encode observations|
+|`observedArea`|optional|GeoJSON Polygon Object|The spatial bounding box of the spatial extent of all FeaturesOfInterest that belong to the Observations associated with this Datastream|
+|`phenomenonTime`|optional|Time Interval (ISO 8601)|The temporal interval of the phenomenon times of all observations belonging to this Datastream|
+|`resultTime`|optional|Time Interval (ISO 8601)|The temporal interval of the result times of all observations belonging to this Datastream|
+
+| observationType ValueCodes |Type|
+|:---------|----------|
+|`http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_CategoryObservation`|uri|
+|`http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_CountObservation`|integer|
+|`http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement`|double|
+|`http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Observation`|any|
+|`http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_TruthObservation`|boolean|
+
+| Related entity | Required |
+|:---------|----------|
+|`Thing`|mandatory|
+|`ObservedProperty`|mandatory|
+|`Sensor`|mandatory|
+|`Observations`|optional|
+
+### Get Datastreams [GET]
+
++ Request
+Retrieve all Datastreams.  
+
+    + Body
+    
++ Response 200 (application/json)
+
+            {
+                "@iot.count": 2,
+                "value": [
+                    {
+                        "@iot.id": 2,
+                        "@iot.selfLink": "http://localhost:8080/v1.0/Datastreams(2)",
+                        "name": "Netatamo 1 humidity",
+                        "description": "Humidity measurement from Netatmo 1 at Geodan Amsterdam",
+                        "unitOfMeasurement": {
+                            "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Humidity",
+                            "name": "Humidity",
+                            "symbol": "%"
+                        },
+                        "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                        "Thing@iot.navigationLink": "http://localhost:0/Datastreams(2)/Thing",
+                        "Sensor@iot.navigationLink": "http://localhost/v1.0/Datastreams(2)/Sensor",
+                        "Observations@iot.navigationLink": "http://localhost/v1.0/Datastreams(2)/Observations",
+                        "ObservedProperty@iot.navigationLink": "http://localhost/v1.0/Datastreams(2)/ObservedProperty"
+                    },
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Datastreams(1)",
+                        "name": "Netatamo 1 temperature",
+                        "description": "Temperature measurement from Netatmo 1 at Geodan Amsterdam",
+                        "unitOfMeasurement": {
+                            "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                            "name": "Celsius",
+                            "symbol": "C"
+                        },
+                        "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                        "Thing@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Thing",
+                        "Sensor@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Sensor",
+                        "Observations@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Observations",
+                        "ObservedProperty@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/ObservedProperty"
+                    }
+                ]
+            }
+
+### Get Datastream by id [GET /v1.0/Datastreams({id})]
+
++ Parameters
+    + id (number) - id of the Datastream to retrieve
+
++ Request
+Retrieve a specific Datastream by given id.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Datastreams(1)",
+                "name": "Netatamo 1 temperature",
+                "description": "Temperature measurement from Netatmo 1 at Geodan Amsterdam",
+                "unitOfMeasurement": {
+                    "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                    "name": "Celsius",
+                    "symbol": "C"
+                },
+                "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                "Thing@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Thing",
+                "Sensor@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Sensor",
+                "Observations@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Observations",
+                "ObservedProperty@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/ObservedProperty"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "Datastream not found"
+                    ]
+                }
+            }
+
+### Get Datastream by Observation [GET /v1.0/Observations({id})/Datastream]
+
++ Parameters
+    + id (number) - id of the Observations to retrieve the Datastream for
+
++ Request
+Retrieve a Datastream by given observations.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Datastreams(1)",
+                "name": "Netatamo 1 temperature",
+                "description": "Temperature measurement from Netatmo 1 at Geodan Amsterdam",
+                "unitOfMeasurement": {
+                    "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                    "name": "Celsius",
+                    "symbol": "C"
+                },
+                "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                "Thing@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Thing",
+                "Sensor@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Sensor",
+                "Observations@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Observations",
+                "ObservedProperty@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/ObservedProperty"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "Observation not found"
+                    ]
+                }
+            }
+
+### Get Datastreams by Thing [GET /v1.0/Things({id})/Datastreams]
+
++ Parameters
+    + id (number) - id of the Thing to retrieve the Datastreams for
+
++ Request
+Retrieve Datastreams by given Thing.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.count": 2,
+                "value": [
+                    {
+                        "@iot.id": 2,
+                        "@iot.selfLink": "http://localhost:8080/v1.0/Datastreams(2)",
+                        "name": "Netatamo 1 humidity",
+                        "description": "Humidity measurement from Netatmo 1 at Geodan Amsterdam",
+                        "unitOfMeasurement": {
+                            "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Humidity",
+                            "name": "Humidity",
+                            "symbol": "%"
+                        },
+                        "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                        "Thing@iot.navigationLink": "http://localhost:0/Datastreams(2)/Thing",
+                        "Sensor@iot.navigationLink": "http://localhost/v1.0/Datastreams(2)/Sensor",
+                        "Observations@iot.navigationLink": "http://localhost/v1.0/Datastreams(2)/Observations",
+                        "ObservedProperty@iot.navigationLink": "http://localhost/v1.0/Datastreams(2)/ObservedProperty"
+                    }.
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Datastreams(1)",
+                        "name": "Netatamo 1 temperature",
+                        "description": "Temperature measurement from Netatmo 1 at Geodan Amsterdam",
+                        "unitOfMeasurement": {
+                            "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                            "name": "Celsius",
+                            "symbol": "C"
+                        },
+                        "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                        "Thing@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Thing",
+                        "Sensor@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Sensor",
+                        "Observations@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Observations",
+                        "ObservedProperty@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/ObservedProperty"
+                    }
+                ]
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "Thing not found"
+                    ]
+                }
+            }
+
+### Get Datastreams by Sensor [GET /v1.0/Sensors({id})/Datastreams]
+
++ Parameters
+    + id (number) - id of the Sensor to retrieve the Datastreams for
+
++ Request
+Retrieve Datastreams by given Sensor.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.count": 2,
+                "value": [
+                    {
+                        "@iot.id": 3,
+                        "@iot.selfLink": "http://localhost/v1.0/Datastreams(3)",
+                        "name": "Netatamo 2 temperature",
+                        "description": "Temperature measurement from Netatmo 2 at Geodan Amsterdam",
+                        "unitOfMeasurement": {
+                            "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                            "name": "Celsius",
+                            "symbol": "C"
+                        },
+                        "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                        "Thing@iot.navigationLink": "http://localhost/v1.0/Datastreams(3)/Thing",
+                        "Sensor@iot.navigationLink": "http://localhost/v1.0/Datastreams(3)/Sensor",
+                        "Observations@iot.navigationLink": "http://localhost/v1.0/Datastreams(3)/Observations",
+                        "ObservedProperty@iot.navigationLink": "http://localhost/v1.0/Datastreams(3)/ObservedProperty"
+                    },
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Datastreams(1)",
+                        "name": "Netatamo 1 temperature",
+                        "description": "Temperature measurement from Netatmo 1 at Geodan Amsterdam",
+                        "unitOfMeasurement": {
+                            "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                            "name": "Celsius",
+                            "symbol": "C"
+                        },
+                        "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                        "Thing@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Thing",
+                        "Sensor@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Sensor",
+                        "Observations@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Observations",
+                        "ObservedProperty@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/ObservedProperty"
+                    }
+                ]
+            }
+### Get Datastreams by ObservedProperty [GET /v1.0/ObservedProperties({id})/Datastreams]
+
++ Parameters
+    + id (number) - id of the ObservedProperty to retrieve the Datastreams for
+
++ Request
+Retrieve Datastreams by given ObservedProperty.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.count": 2,
+                "value": [
+                    {
+                        "@iot.id": 3,
+                        "@iot.selfLink": "http://localhost/v1.0/Datastreams(3)",
+                        "name": "Netatamo 2 temperature",
+                        "description": "Temperature measurement from Netatmo 2 at Geodan Amsterdam",
+                        "unitOfMeasurement": {
+                            "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                            "name": "Celsius",
+                            "symbol": "C"
+                        },
+                        "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                        "Thing@iot.navigationLink": "http://localhost/v1.0/Datastreams(3)/Thing",
+                        "Sensor@iot.navigationLink": "http://localhost/v1.0/Datastreams(3)/Sensor",
+                        "Observations@iot.navigationLink": "http://localhost/v1.0/Datastreams(3)/Observations",
+                        "ObservedProperty@iot.navigationLink": "http://localhost/v1.0/Datastreams(3)/ObservedProperty"
+                    },
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Datastreams(1)",
+                        "name": "Netatamo 1 temperature",
+                        "description": "Temperature measurement from Netatmo 1 at Geodan Amsterdam",
+                        "unitOfMeasurement": {
+                            "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                            "name": "Celsius",
+                            "symbol": "C"
+                        },
+                        "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                        "Thing@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Thing",
+                        "Sensor@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Sensor",
+                        "Observations@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Observations",
+                        "ObservedProperty@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/ObservedProperty"
+                    }
+                ]
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "Sensor not found"
+                    ]
+                }
+            }   
+            
+### Post Datastream by Thing with deep inserts [POST /v1.0/Things({id})/Datastreams]
+
++ Parameters
+    + id (number) - id of the Thing to link the new datastream to
+    
++ Request (application/json)
+Add a new Datastream and deep insert a new Sensor and ObservedProperty and link the Datastream to an existing Thing. Sensor and Observation.
+
+    + Body
+    
+            {
+                "name": "Netatamo 1 temperature",
+                "description": "Temperature measurement from Netatmo 1 at Geodan Amsterdam",
+                "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                "unitOfMeasurement": {
+                    "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                    "name": "Celsius",
+                    "symbol": "C"
+                },
+                "ObservedProperty": {
+                    "name": "Temperature",
+                    "definition": "http://www.qudt.org/qudt/owl/1.0.0/quantity/Instances.html#Temperature",
+                    "description": "Temperature of the camping site"
+                },
+                "Sensor": {
+                    "name": "My Sensor",
+                    "description": "SensorUp Tempomatic 1000-b",
+                    "encodingType": "application/pdf",
+                    "metadata": "Calibration date:  Jan 11, 2015"
+                }
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/Datastreams(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Datastreams(1)",
+                "name": "Netatamo 1 temperature",
+                "description": "Temperature measurement from Netatmo 1 at Geodan Amsterdam",
+                "unitOfMeasurement": {
+                    "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                    "name": "Celsius",
+                    "symbol": "C"
+                },
+                "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                "Thing@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Thing",
+                "Sensor@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Sensor",
+                "Observations@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Observations",
+                "ObservedProperty@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/ObservedProperty"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Bad Request",
+                    "code": 400,
+                    "message": [
+                        "Missing mandatory parameter: ....."
+                    ]
+                }
+            }
+
+### Post Datastream linked [POST /v1.0/Datastreams]
+
++ Request (application/json)
+Add a new Datastream and link to an existing Thing, Sensor and ObservedProperty
+
+    + Body
+    
+            {
+                "name": "Netatamo 1 temperature",
+                "description": "Temperature measurement from Netatmo 1 at Geodan Amsterdam",
+                "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                "unitOfMeasurement": {
+                    "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                    "name": "Celsius",
+                    "symbol": "C"
+                },
+                "Thing": {
+                    "@iot.id": "1",
+                },
+                "ObservedProperty": {
+                    "@iot.id": "1",
+                },
+                "Sensor": {
+                    "@iot.id": "1",
+                }
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/Datastreams(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Datastreams(1)",
+                "name": "Netatamo 1 temperature",
+                "description": "Temperature measurement from Netatmo 1 at Geodan Amsterdam",
+                "unitOfMeasurement": {
+                    "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                    "name": "Celsius",
+                    "symbol": "C"
+                },
+                "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                "Thing@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Thing",
+                "Sensor@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Sensor",
+                "Observations@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/Observations",
+                "ObservedProperty@iot.navigationLink": "http://localhost/v1.0/Datastreams(1)/ObservedProperty"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Bad Request",
+                    "code": 400,
+                    "message": [
+                        "Missing mandatory parameter: ....."
+                    ]
+                }
+            }
+
+### Patch Datastream [PATCH /v1.0/Datastreams({id})]
+
++ Parameters
+    + id (number) - ID of Datastream to patch
+
++ Request (application/json)
+Patch a specified Datastream
+
+    + Body
+    
+            {
+                "name": "ALL YOUR BASE",
+            }
+            
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "@iot.id": 1,
+                "name": "ALL YOUR BASE",
+                "description": "Temperature measurement from Netatmo 1 at Geodan Amsterdam",
+                "unitOfMeasurement": {
+                    "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                    "name": "Celsius",
+                    "symbol": "C"
+                },
+                "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "datastream not found"
+                    ]
+                }
+            }
+            
+### Delete Datastream [DELETE /v1.0/Datastreams({id})]
+
++ Parameters
+    + id (number) - ID of Datastream to delete
+    
++ Response 200 (application/json)
+Delete a specified Datastream from the Datastreams collection
+
+    + Body
+    
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "datastream not found"
+                    ]
+                }
+            }
+            
+## Sensors [/v1.0/Sensors]
+A Sensor in SensorThings represents the physical device capable of observing a physical property and converting it to an electrical impulse and be converted to a empirical value to represent a measurement value of the physical property
+
+| Property | Required | Type | Definition |
+|:---------|----------|------|-------------|
+|`name`|mandatory|string|A property provides a label for Sensor entity, commonly a descriptive name|
+|`description`|mandatory|string|The description of the Sensor entity|
+|`encodingType`|mandatory|ValueCode|The encoding type of the metadata property. Its value is one of the ValueCode enumeration|
+|`metadata`|mandatory|Any (depending on the value of the encodingType)|The detailed description of the Sensor or system. The metadata type is defined by encodingType|
+
+| encodingType ValueCodes |Type|
+|:---------|----------|
+|`application/vnd.geo+json`|GeoJSON|
+|`application/pdf`|string|
+|`http://www.opengis.net/doc/IS/SensorML/2.0`|string|
+
+| Related entity | Required |
+|:---------|----------|
+|`Datastreams`|optional|
+
+### Get Sensors [GET]
+
++ Request
+Retrieve all Sensors.  
+
+    + Body
+    
++ Response 200 (application/json)
+
+            {
+                "@iot.count": 2,
+                "value": [
+                    {
+                        "@iot.id": 2,
+                        "@iot.selfLink": "http://localhost/v1.0/Sensors(2)",
+                        "name": "DHT11",
+                        "description": "The DHT11 is a basic, ultra low-cost digital temperature and humidity sensor",
+                        "encodingType": "application/pdf",
+                        "metadata": "https://cdn-shop.adafruit.com/datasheets/DHT11.pdf",
+                        "Datastreams@iot.navigationLink": "http://localhost/v1.0/Sensors(2)/Datastreams"
+                    },
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Sensors(1)",
+                        "name": "DHT22",
+                        "description": "Digital temperature and humidity sensor",
+                        "encodingType": "application/pdf",
+                        "metadata": "https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf",
+                        "Datastreams@iot.navigationLink": "http://localhost/v1.0/Sensors(1)/Datastreams"
+                    }
+                ]
+            }
+
+### Get Sensors by id [GET /v1.0/Sensors({id})]
+
++ Parameters
+    + id (number) - id of the Sensor to retrieve
+
++ Request
+Retrieve a specific Sensor by given id.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Sensors(1)",
+                "name": "DHT22",
+                "description": "Digital temperature and humidity sensor",
+                "encodingType": "application/pdf",
+                "metadata": "https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf",
+                "Datastreams@iot.navigationLink": "http://localhost/v1.0/Sensors(1)/Datastreams"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "Sensor not found"
+                    ]
+                }
+            }
+         
+### Get Sensor by Datastream [GET /v1.0/Datastreams({id})/Sensor]
+
++ Parameters
+    + id (number) - id of the Datastream to retrieve the Sensor for
+
++ Request
+Retrieve a Sensor by given Datastream.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Sensors(1)",
+                "name": "DHT22",
+                "description": "Digital temperature and humidity sensor",
+                "encodingType": "application/pdf",
+                "metadata": "https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf",
+                "Datastreams@iot.navigationLink": "http://localhost/v1.0/Sensors(1)/Datastreams"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "datastream not found"
+                    ]
+                }
+            }  
+            
+### Post Sensor [POST]
+
++ Request (application/json)
+Add a new Sensor to the Sensors collection
+
+    + Body
+    
+            {
+                "name": "DHT22",
+                "description": "Digital temperature and humidity sensor",
+                "encodingType": "application/pdf",
+                "metadata": "https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf",
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/Sensors(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Sensors(1)",
+                "name": "DHT22",
+                "description": "Digital temperature and humidity sensor",
+                "encodingType": "application/pdf",
+                "metadata": "https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf",
+                "Datastreams@iot.navigationLink": "http://localhost/v1.0/Sensors(1)/Datastreams"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Bad Request",
+                    "code": 400,
+                    "message": [
+                        "Missing mandatory parameter: ....."
+                    ]
+                }
+            }
+            
+### Patch Sensor [PATCH /v1.0/Sensors({id})]
+
++ Parameters
+    + id (number) - ID of Sensor to patch
+
++ Request (application/json)
+Patch a specified Sensor
+
+    + Body
+    
+            {
+                "name": "ALL YOUR BASE",
+            }
+            
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "@iot.id": 1,
+                "name": "DHT22",
+                "description": "Digital temperature and humidity sensor",
+                "encodingType": "application/pdf",
+                "metadata": "https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf",
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "sensor not found"
+                    ]
+                }
+            }
+
+### Delete Sensor [DELETE /v1.0/Sensors({id})]
+
++ Parameters
+    + id (number) - ID of Sensor to delete
+    
++ Response 200 (application/json)
+Delete a specified Sensor from the Sensors collection
+
+    + Body
+    
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "sensor not found"
+                    ]
+                }
+            }
+
+## ObservedProperties [/v1.0/ObservedProperties]
+An ObservedProperty in SensorThings represents the physical phenomenon being observed by the Sensor. An ObserveProperty is linked to a Datastream which can only have one ObservedProperty
+
+POST
+
+| Property | Required | Type | Definition |
+|:---------|----------|------|-------------|
+|`name`|mandatory|string|A property provides a label for ObservedProperty entity, commonly a descriptive name|
+|`definition`|mandatory|uri|The URI of the ObservedProperty. Dereferencing this URI SHOULD result in a representation of the definition of the ObservedProperty|
+|`description`|mandatory|string|A description about the ObservedProperty|
+
+| Related entity | Required |
+|:---------|----------|
+|`Datastreams`|optional|
+
+### Get ObservedProperties [GET]
+
++ Request
+Retrieve all ObservedProperties.  
+
+    + Body
+    
++ Response 200 (application/json)
+
+            {
+                "@iot.count": 2,
+                "value": [
+                    {
+                        "@iot.id": 2,
+                        "@iot.selfLink": "http://localhost:8080/v1.0/ObservedProperties(2)",
+                        "name": "Humidity",
+                        "description": "Humidity in situ",
+                        "definition": "http://www.qudt.org/qudt/owl/1.0.0/quantity/Instances.html#Humidity",
+                        "Datastreams@iot.navigationLink": "http://localhost/v1.0/ObservedProperties(2)/Datastreams"
+                    },
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/ObservedProperties(1)",
+                        "name": "Temperature",
+                        "description": "Temperature in situ",
+                        "definition": "http://www.qudt.org/qudt/owl/1.0.0/quantity/Instances.html#Temperature",
+                        "Datastreams@iot.navigationLink": "http://localhost/v1.0/ObservedProperties(1)/Datastreams"
+                    }
+                ]
+            }
+
+### Get ObservedProperty by id [GET /v1.0/ObservedProperties({id})]
+
++ Parameters
+    + id (number) - id of the ObservedProperty to retrieve
+
++ Request
+Retrieve a specific ObservedProperty by given id.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/ObservedProperties(1)",
+                "name": "Temperature",
+                "description": "Temperature in situ",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/quantity/Instances.html#Temperature",
+                "Datastreams@iot.navigationLink": "http://localhost/v1.0/ObservedProperties(1)/Datastreams"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "observedproperty not found"
+                    ]
+                }
+            }
+            
+### Get ObservedProperty by Datastream [GET /v1.0/Datastreams({id})/ObservedProperty]
+
++ Parameters
+    + id (number) - id of the Datastream to retrieve the ObservedProperty for
+
++ Request
+Retrieve an ObservedProperty by given Datastream.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/ObservedProperties(1)",
+                "name": "Temperature",
+                "description": "Temperature in situ",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/quantity/Instances.html#Temperature",
+                "Datastreams@iot.navigationLink": "http://localhost/v1.0/ObservedProperties(1)/Datastreams"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "datastream not found"
+                    ]
+                }
+            }            
+         
+### Post ObservedProperty [POST]
+
++ Request (application/json)
+Add a new ObservedProperty to the ObservedProperties collection
+
+    + Body
+    
+            {
+                "name": "Temperature",
+                "description": "Temperature in situ",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/quantity/Instances.html#Temperature"
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/ObservedProperties(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/ObservedProperties(1)",
+                "name": "Temperature",
+                "description": "Temperature in situ",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/quantity/Instances.html#Temperature",
+                "Datastreams@iot.navigationLink": "http://localhost/v1.0/ObservedProperties(1)/Datastreams"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Bad Request",
+                    "code": 400,
+                    "message": [
+                        "Missing mandatory parameter: ....."
+                    ]
+                }
+            }
+            
+### Patch ObservedProperty [PATCH /v1.0/ObservedProperties({id})]
+
++ Parameters
+    + id (number) - ID of ObservedProperty to patch
+
++ Request (application/json)
+Patch a specified Sensor
+
+    + Body
+    
+            {
+                "name": "ALL YOUR BASE",
+            }
+            
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "@iot.id": 1,
+                "name": "ALL YOUR BASE",
+                "description": "Temperature in situ",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/quantity/Instances.html#Temperature",
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "observedproperty not found"
+                    ]
+                }
+            }
+
+### Delete ObservedProperty [DELETE /v1.0/ObservedProperties({id})]
+
++ Parameters
+    + id (number) - ID of ObservedProperty to delete
+    
++ Response 200 (application/json)
+Delete a specified ObservedProperty from the ObservedProperties collection
+
+    + Body
+    
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "observedproperty not found"
+                    ]
+                }
+            }          
+
+## Observations [/v1.0/Observations]
+An Observation is the act of measuring or otherwise determining the value of a property. 
+An Observation in SensorThings represents a single Sensor reading of an ObservedProperty. 
+A physical device, a Sensor, sends Observations to a specified Datastream. 
+An Observation requires a FeatureOfInterest entity, if none is provided in the request, the Location of the Thing associated with the Datastream, will be assigned to the new Observation as the FeatureOfInterest.
+
+| Property | Required | Type | Description |
+|:---------|----------|------|------|
+|`phenomenonTime`|optional|Time(Interval) String (ISO 8601) will be added by the server if not provided|The time instant or period of when the Observation happens|
+|`result`|mandatory|Any (depends on the observationType defined in the associated Datastream)|The estimated value of an ObservedProperty from the Observation|
+|`resultTime`|optional|Time(Interval) String (ISO 8601)|The time of the Observation's result was generated|
+|`resultQuality`|optional|string|Describes the quality of the result|
+|`validTime`|optional|Time(Interval) String (ISO 8601)|The time period during which the result may be used|
+|`parameters`|optional|JSON Object|Key-value pairs showing the environmental conditions during measurement|
+
+| Related entity | Required |
+|:---------|----------|
+|`Datastreams`|mandatory|
+|`FeatureOfInterest`|optional (added automatically when not provided)|
+
+### Get Observations [GET]
+
++ Request
+Retrieve all Observations.  
+
+    + Body
+    
++ Response 200 (application/json)
+
+            {
+                "@iot.count": 2,
+                "value": [
+                    {
+                        "@iot.id": 2,
+                        "@iot.selfLink": "http://localhost/v1.0/Observations(2)",
+                        "phenomenonTime": "2017-07-21T11:48:21.321Z",
+                        "result": 38,
+                        "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(2)/Datastream",
+                        "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(2)/FeatureOfInterest",
+                        "resultTime": "2017-07-21T11:48:21.321Z"
+                    },
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Observations(1)",
+                        "phenomenonTime": "2017-07-21T11:48:21.321Z",
+                        "result": 45,
+                        "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(1)/Datastream",
+                        "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(1)/FeatureOfInterest",
+                        "resultTime": "2017-07-21T11:48:21.321Z"
+                    }
+                ]
+            }
+
+### Get Observation by id [GET /v1.0/Observations({id})]
+
++ Parameters
+    + id (number) - id of the Observation to retrieve
+
++ Request
+Retrieve a specific Observation by given id.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Observations(1)",
+                "phenomenonTime": "2017-07-21T11:48:21.321Z",
+                "result": 45,
+                "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(1)/Datastream",
+                "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(1)/FeatureOfInterest",
+                "resultTime": "2017-07-21T11:48:21.321Z"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "observation not found"
+                    ]
+                }
+            }
+            
+### Get Observations by FeatureOfInterest [GET /v1.0/FeaturesOfInterest({id})/Observations]
+
++ Parameters
+    + id (number) - id of the FeatureOfInterest to retrieve the Observations for
+
++ Request
+Retrieve Observations for the given FeatureOfInterest.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.count": 2,
+                "value": [
+                    {
+                        "@iot.id": 2,
+                        "@iot.selfLink": "http://localhost/v1.0/Observations(2)",
+                        "phenomenonTime": "2017-07-21T11:48:21.321Z",
+                        "result": 38,
+                        "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(2)/Datastream",
+                        "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(2)/FeatureOfInterest",
+                        "resultTime": "2017-07-21T11:48:21.321Z"
+                    },
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Observations(1)",
+                        "phenomenonTime": "2017-07-21T11:48:21.321Z",
+                        "result": 45,
+                        "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(1)/Datastream",
+                        "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(1)/FeatureOfInterest",
+                        "resultTime": "2017-07-21T11:48:21.321Z"
+                    }
+                ]
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "featureofinterest not found"
+                    ]
+                }
+            }
+            
+### Get Observations by Datastream [GET /v1.0/Datastreams({id})/Observations]
+
++ Parameters
+    + id (number) - id of the Datastream to retrieve the Observations for
+
++ Request
+Retrieve Observations for the given Datastream.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.count": 2,
+                "value": [
+                    {
+                        "@iot.id": 2,
+                        "@iot.selfLink": "http://localhost/v1.0/Observations(2)",
+                        "phenomenonTime": "2017-07-21T11:48:21.321Z",
+                        "result": 38,
+                        "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(2)/Datastream",
+                        "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(2)/FeatureOfInterest",
+                        "resultTime": "2017-07-21T11:48:21.321Z"
+                    },
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Observations(1)",
+                        "phenomenonTime": "2017-07-21T11:48:21.321Z",
+                        "result": 45,
+                        "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(1)/Datastream",
+                        "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(1)/FeatureOfInterest",
+                        "resultTime": "2017-07-21T11:48:21.321Z"
+                    }
+                ]
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "datastream not found"
+                    ]
+                }
+            }
+            
+### Post Observation [POST]
+
++ Request (application/json)
+Add a new Observation to the Observations collection with minimal parameters
+
+    + Body
+    
+            {
+              "result" : 38,
+              "Datastream":{"@iot.id":"1"}
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/Observations(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Observations(1)",
+                "phenomenonTime": "2017-07-24T10:46:32.576Z",
+                "result": 38,
+                "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(1)/Datastream",
+                "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(1)/FeatureOfInterest"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Bad Request",
+                    "code": 400,
+                    "message": [
+                        "Missing mandatory parameter: ....."
+                    ]
+                }
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "datastream not found"
+                    ]
+                }
+            }
+            
+### Post Observation by Datastream [POST /v1.0/Datastreams({id})/Observations]
+
++ Parameters
+    + id (number) - id of the Datastream to link the Observation to
+
++ Request (application/json)
+Add a new Observation with minimal parameters to the Observations collection and link to a Datastream
+
+    + Body
+    
+            {
+                "result": 38
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/Observations(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Observations(1)",
+                "phenomenonTime": "2017-07-24T10:46:32.576Z",
+                "result": 38,
+                "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(1)/Datastream",
+                "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(1)/FeatureOfInterest"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Bad Request",
+                    "code": 400,
+                    "message": [
+                        "Missing mandatory parameter: ....."
+                    ]
+                }
+            }   
+            
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "datastream not found"
+                    ]
+                }
+            }
+            
+### Post Observation by Datastream with new FeatureOfInterest [POST /v1.0/Datastreams({id})/Observations]
+
++ Parameters
+    + id (number) - id of the Datastream to link the Observation to
+
++ Request (application/json)
+Add a new Observation with all parameters including a new FeatureOfInterest to the Observations collection and link to Datastream. FeatureOfInterest can also be linked instead of a deep insert by giving it's id "FeatureOfInterest": {"@iot.id": "1"}
+
+    + Body
+    
+            {
+              "phenomenonTime": "2017-07-24T10:46:32.576Z",
+              "result" : 38,
+              "FeatureOfInterest": {
+                "name": "Geodan Amsterdam 2nd floor",
+                "description": "Temperature measurement location @ Geodan Amsterdam 2nd floor",
+                "encodingType": "application/vnd.geo+json",
+                "feature": {
+                    "coordinates": [4.91320,52.34227],
+                    "type": "Point"
+                  }
+              }
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/Observations(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Observations(1)",
+                "phenomenonTime": "2017-07-24T10:46:32.576Z",
+                "result": 38,
+                "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(1)/Datastream",
+                "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(1)/FeatureOfInterest"
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Bad Request",
+                    "code": 400,
+                    "message": [
+                        "Missing mandatory parameter: ....."
+                    ]
+                }
+            }   
+            
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "datastream not found"
+                    ]
+                }
+            }            
+### Post Observation with all parameters [POST /v1.0/Observations]
+
++ Request (application/json)
+Add a new Observation with all parameters including a new FeatureOfInterest to the Observations collection and link to Datastream. FeatureOfInterest can also be linked instead of a deep insert by giving it's id "FeatureOfInterest": {"@iot.id": "1"}
+
+    + Body
+    
+            {
+              "phenomenonTime": "2017-07-24T10:46:32.576Z",
+              "resultTime": "2017-07-24T10:46:32.576Z",
+              "result": 38,
+              "resultQuality": "high",
+              "validTime": "2017-07-24T10:46:32.576Z/2017-07-24T10:51:32.576Z",
+              "parameters": {"param1": "test1", "param2": "test2"},
+              "Datastream": {"@iot.id":"1"},
+              "FeatureOfInterest": {"@iot.id":"1"}
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/Observations(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Observations(1)",
+                "phenomenonTime": "2017-07-24T10:46:32.576Z",
+                "resultTime": "2017-07-24T10:46:32.576Z",
+                "result": 38,
+                "validTime": "2017-07-24T10:46:32.576Z/2017-07-24T10:51:32.576Z",
+                "parameters": {"param1": "test1", "param2": "test2"},
+                "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(1)/Datastream",
+                "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(1)/FeatureOfInterest"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Bad Request",
+                    "code": 400,
+                    "message": [
+                        "Missing mandatory parameter: ....."
+                    ]
+                }
+            }   
+            
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "datastream/feature of interest not found"
+                    ]
+                }
+            }
+
+### Patch Observation [PATCH /v1.0/Observations({id})]
+
++ Parameters
+    + id (number) - ID of Observation to patch
+
++ Request (application/json)
+Patch a specified Observation
+
+    + Body
+    
+            {
+                "result": 12.5,
+            }
+            
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Observations(1)",
+                "phenomenonTime": "2017-07-24T10:46:32.576Z",
+                "resultTime": "2017-07-24T10:46:32.576Z",
+                "result": 12.5,
+                "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(1)/Datastream",
+                "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(1)/FeatureOfInterest"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "Observation not found"
+                    ]
+                }
+            }
+            
+### Delete Observations [DELETE /v1.0/Observations({id})]
+
++ Parameters
+    + id (number) - ID of Observation to delete
+    
++ Response 200 (application/json)
+Delete a specified Observation from the Things collection
+
+    + Body
+    
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "observation not found"
+                    ]
+                }
+            }
+
+## FeaturesOfInterest [/v1.0/FeaturesOfInterest]
+An Observation results is a value being assigned to a phenomenon. 
+The phenomenon is a property of a feature, the latter being the FeatureOfInterest of the Observation [OGC and ISO 19156:2011]. 
+In the context of the Internet of Things, many Observations’ FeatureOfInterest can be the Location of the Thing. 
+For example, the FeatureOfInterest of a wifi-connect thermostat can be the Location of the thermostat (i.e., the living room where the thermostat is located in). 
+In the case of remote sensing, the FeatureOfInterest can be the geographical area or volume that is being sensed.
+
+| Property | Required | Type | Description |
+|:---------|----------|------|------|
+|`name`|mandatory|string|A property provides a label for FeatureOfInterest entity, commonly a descriptive name|
+|`description`|mandatory|string|The description about the FeatureOfInterest|
+|`encodingType`|mandatory|ValueCode|The encoding type of the feature property. Its value is one of the ValueCode enumeration|
+|`feature`|mandatory|Any (depending on the value of the encodingType)|The detailed description of the feature. The data type is defined by encodingType|
+
+| encodingType ValueCodes | Type |
+|:---------|---------|
+|`application/vnd.geo+json`|GeoJSON|
+
+| Related entity | Required |
+|:---------|----------|
+|`Observations`|optional|
+
+### Get FeaturesOfInterest [GET]
+
++ Request
+Retrieve all FeaturesOfInterest.  
+
+    + Body
+    
++ Response 200 (application/json)
+
+            {
+                "@iot.count": 2,
+                "value": [
+                    {
+                        "@iot.id": 2,
+                        "@iot.selfLink": "http://localhost/v1.0/FeatureOfInterest(2)",
+                        "name": "Geodan 's-Hertogenbosch 2nd floor",
+                        "description": "Temperature measurement location @ Geodan 's-Hertogenbosch 2nd floor",
+                        "encodingType": "application/vnd.geo+json",
+                        "feature": {
+                            "coordinates": [
+                                5.29969,
+                                51.69176
+                            ],
+                            "type": "Point"
+                        },
+                        "Observations@iot.navigationLink": "http://localhost/v1.0/FeatureOfInterest(2)/Observations"
+                    },
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/FeatureOfInterest(1)",
+                        "name": "Geodan Amsterdam 2nd floor",
+                        "description": "Temperature measurement location @ Geodan Amsterdam 2nd floor",
+                        "encodingType": "application/vnd.geo+json",
+                        "feature": {
+                            "coordinates": [
+                                4.9132,
+                                52.34227
+                            ],
+                            "type": "Point"
+                        },
+                        "Observations@iot.navigationLink": "http://localhost/v1.0/FeatureOfInterest(1)/Observations"
+                    }
+                ]
+            }
+
+### Get FeaturesOfInterest by id [GET /v1.0/FeaturesOfInterest({id})]
+
++ Parameters
+    + id (number) - id of the FeatureOfInterest to retrieve
+
++ Request
+Retrieve a specific FeatureOfInterest by given id.
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/FeatureOfInterest(1)",
+                "name": "Geodan Amsterdam 2nd floor",
+                "description": "Temperature measurement location @ Geodan Amsterdam 2nd floor",
+                "encodingType": "application/vnd.geo+json",
+                "feature": {
+                    "coordinates": [
+                        4.9132,
+                        52.34227
+                    ],
+                    "type": "Point"
+                },
+                "Observations@iot.navigationLink": "http://localhost/v1.0/FeatureOfInterest(1)/Observations"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "featureofinterest not found"
+                    ]
+                }
+            }
+            
+                                    
+### Get FeaturesOfInterest by Observation [GET /v1.0/Observations({id})/FeatureOfInterest]
+
++ Parameters
+    + id (number) - id of the Observation to retrieve the FeatureOfInterest for
+
++ Request
+Retrieve FeaturesOfInterest for a specific Observation
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/FeatureOfInterest(1)",
+                "name": "Geodan Amsterdam 2nd floor",
+                "description": "Temperature measurement location @ Geodan Amsterdam 2nd floor",
+                "encodingType": "application/vnd.geo+json",
+                "feature": {
+                    "coordinates": [
+                        4.9132,
+                        52.34227
+                    ],
+                    "type": "Point"
+                },
+                "Observations@iot.navigationLink": "http://localhost/v1.0/FeatureOfInterest(1)/Observations"
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "observation not found"
+                    ]
+                }
+            }
+
+### Post FeatureOfInterest [POST]
+
++ Request (application/json)
+Add a new FeatureOfInterest to the FeaturesOfInterest collection
+
+    + Body
+
+            {
+                "name": "Geodan Amsterdam 2nd floor",
+                "description": "Temperature measurement location @ Geodan Amsterdam 2nd floor",
+                "encodingType": "application/vnd.geo+json",
+                "feature": {
+                    "coordinates": [4.9132, 52.34227],
+                    "type": "Point"
+                }
+            }
+
+
++ Response 201 (application/json)
+
+    + Headers
+    
+            Location: /v1.0/FeaturesOfInterest(1)
+            
+    + Body
+    
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/FeatureOfInterest(1)",
+                "name": "Geodan Amsterdam 2nd floor",
+                "description": "Temperature measurement location @ Geodan Amsterdam 2nd floor",
+                "encodingType": "application/vnd.geo+json",
+                "feature": {
+                    "coordinates": [
+                        4.9132,
+                        52.34227
+                    ],
+                    "type": "Point"
+                },
+                "Observations@iot.navigationLink": "http://localhost/v1.0/FeatureOfInterest(1)/Observations"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Bad Request",
+                    "code": 400,
+                    "message": [
+                        "Missing mandatory parameter: ....."
+                    ]
+                }
+            }
+
+### Patch FeatureOfInterest [PATCH /v1.0/FeaturesOfInterest({id})]
+
++ Parameters
+    + id (number) - ID of FeatureOfInterest to patch
+
++ Request (application/json)
+Patch a specified FeatureOfInterest
+
+    + Body
+    
+            {
+                "name": "ALL YOUR BASE",
+            }
+            
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "name": "ALL YOUR BASE",
+                "description": "Temperature measurement location @ Geodan Amsterdam 2nd floor",
+                "encodingType": "application/vnd.geo+json",
+                "feature": {
+                    "coordinates": [
+                        4.9132,
+                        52.34227
+                    ],
+                    "type": "Point"
+                }
+            }
+
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "featureofinterest not found"
+                    ]
+                }
+            }
+            
+### Delete FeatureOfInterest [DELETE /v1.0/FeaturesOfInterest({id})]
+
++ Parameters
+    + id (number) - ID of FeatureOfInterest to delete
+    
++ Response 200 (application/json)
+Delete a specified FeatureOfInterest from the FeaturesOfInterest collection
+
+    + Body
+    
++ Response 404 (application/json)
+
+    + Body
+    
+            {
+                "error": {
+                    "status": "Not Found",
+                    "code": 404,
+                    "message": [
+                        "featureofinterest not found"
+                    ]
+                }
+            }         
+            
+# group ODATA
+SensorThings API follows OData’s specification for requesting entities. That means the entity control information, resource path usages, query options, the relevant JSON encodings, and batch-processing request follow OData 4.0. 
+By using OData’s standard ways for requesting entities, developers who are familiar with OData can create SensorThings applications easily. 
+However, SensorThings API does not follow the OData Common Schema Definition Language and as a result does not follow its metadata service entity model. 
+Thus, SensorThings API should not be seen as an OData compliant API. 
+SensorThings API’s future work will explore possible harmonization between SensorThings API and OData.
+
+## $select examples [/select]
+The $select system query option allows clients to requests a limited set of information for each entity or complex type identified by the ResourcePath and other System Query Options like $filter, $top, $skip etc. 
+The $select query option is often used in conjunction with the $expand query option, to first increase the scope of the resource graph returned ($expand) and then selectively prune that resource graph ($select).
+
+### Retrieve only the result field for Observations [GET /v1.0/Observations(1)?$select=result]
+
++ Request
+Retrieve the result fields from all Observations.  
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "@iot.count": 2,
+                "value": [
+                    {
+                        "result": 38
+                    },
+                    {
+                        "result": 12
+                    }
+                ]
+            }
+    
+### Retrieve name and description for specific Thing [GET /v1.0/Things({id})?$select=name,description]
+
++ Parameters
+    + id (number) - ID of Thing to retrieve
+
++ Request
+Retrieve 2 fields (name and description) for a specific Thing.  
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "name": "Netatmo 1",
+                "description": "Netatmo PK",
+            }
+    
+## $orderby examples [/order]
+The $orderby system query option allows clients to request resources in either ascending order using asc or descending order using desc. 
+If asc or desc not specified, then the resources will be ordered in ascending order. 
+
+### Get Observations sort by result ascending [GET /v1.0/Observations?$orderby=result]
+
++ Request
+Retrieve all Observation order by result ascending.  
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "@iot.count": 2,
+                "value": [
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Observations(1)",
+                        "phenomenonTime": "2017-07-24T10:49:57.549Z",
+                        "result": 12,
+                        "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(1)/Datastream",
+                        "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(1)/FeatureOfInterest",
+                        "resultTime": null
+                    },
+                    {
+                        "@iot.id": 2,
+                        "@iot.selfLink": "http://localhost/v1.0/Observations(2)",
+                        "phenomenonTime": "2015-04-13T00:00:00.123Z",
+                        "result": 38,
+                        "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(2)/Datastream",
+                        "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(2)/FeatureOfInterest",
+                        "resultTime": "2015-04-13T00:00:05Z"
+                    }
+                ]
+            }
+            
+### Get Observations sort by result descending [GET /v1.0/Observations?$orderby=result desc]
+
++ Request
+Retrieve all Observation order by result ascending.  
+
+    + Body
+
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "@iot.count": 2,
+                "value": [
+                    {
+                        "@iot.id": 2,
+                        "@iot.selfLink": "http://localhost/v1.0/Observations(2)",
+                        "phenomenonTime": "2015-04-13T00:00:00.123Z",
+                        "result": 38,
+                        "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(2)/Datastream",
+                        "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(2)/FeatureOfInterest",
+                        "resultTime": "2015-04-13T00:00:05Z"
+                    },
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Observations(1)",
+                        "phenomenonTime": "2017-07-24T10:49:57.549Z",
+                        "result": 12,
+                        "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(1)/Datastream",
+                        "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(1)/FeatureOfInterest",
+                        "resultTime": null
+                    }
+                ]
+            }
+    
+## $expand examples [/expand]
+The $expand system query option specifies the related resources to be included in line with retrieved resources.
+
+### Get Thing with Locations [GET /v1.0/Things(1)?$expand=Locations]
+
++ Request
+Retrieve a specific Thing and expand the Locations
+
+    + Body
+    
++ Response 200 (application/json)
+
+    + Body
+   
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Things(1)",
+                "name": "Netatmo 1",
+                "description": "Netatmo VZ",
+                "properties": {
+                    "organisation": "Geodan",
+                    "owner": "Tim"
+                },
+                "Datastreams@iot.navigationLink": "http://localhost/v1.0/Things(1)/Datastreams",
+                "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Things(1)/HistoricalLocations",
+                "Locations": [
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Locations(1)",
+                        "name": "President Kennedylaan 1",
+                        "description": "Geodan building",
+                        "encodingType": "application/vnd.geo+json",
+                        "location": {
+                            "coordinates": [
+                                4.9132,
+                                52.34227
+                            ],
+                            "type": "Point"
+                        },
+                        "Things@iot.navigationLink": "http://localhost/v1.0/Locations(1)/Things",
+                        "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Locations(1)/HistoricalLocations"
+                    }
+                ]
+            } 
+
+### Get Thing with Locations, Datastreams and more [GET /v1.0/Things(1)?$expand=Locations,Datastreams,Datastreams/Sensor,Datastreams/ObservedProperty,Datastreams/Observations]
+
++ Request
+Retrieve a specific Thing and expand the Locations and Datastreams, for every Datastream expand Sensor, ObservedProperty and Observations
+
+    + Body
+    
++ Response 200 (application/json)
+
+    + Body
+   
+            {
+                "@iot.id": 1,
+                "@iot.selfLink": "http://localhost/v1.0/Things(1)",
+                "name": "Netatmo 1",
+                "description": "Netatmo VZ",
+                "properties": {
+                    "organisation": "Geodan",
+                    "owner": "Tim"
+                },
+                "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Things(1)/HistoricalLocations",
+                "Locations": [
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost/v1.0/Locations(1)",
+                        "name": "President Kennedylaan 1",
+                        "description": "Geodan building",
+                        "encodingType": "application/vnd.geo+json",
+                        "location": {
+                            "coordinates": [
+                                4.9132,
+                                52.34227
+                            ],
+                            "type": "Point"
+                        },
+                        "Things@iot.navigationLink": "http://localhost/v1.0/Locations(1)/Things",
+                        "HistoricalLocations@iot.navigationLink": "http://localhost/v1.0/Locations(1)/HistoricalLocations"
+                    }
+                ],
+                "Datastreams": [
+                    {
+                        "@iot.id": 2,
+                        "@iot.selfLink": "http://localhost/v1.0/Datastreams(2)",
+                        "name": "Humidity",
+                        "description": "Humidity measurements from Netatmo 1 at Geodan Amsterdam",
+                        "unitOfMeasurement": {
+                            "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Humidity",
+                            "name": "Humidity",
+                            "symbol": "%"
+                        },
+                        "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                        "Thing@iot.navigationLink": "http://localhost/v1.0/Datastreams(2)/Thing",
+                        "Sensor": {
+                            "@iot.id": 2,
+                            "@iot.selfLink": "http://localhost/v1.0/Sensors(2)",
+                            "name": "DHT11",
+                            "description": "Digital temperature and humidity sensor",
+                            "encodingType": "application/pdf",
+                            "metadata": "https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf",
+                            "Datastreams@iot.navigationLink": "http://localhost/v1.0/Sensors(2)/Datastreams"
+                        },
+                        "Observations": [
+                            {
+                                "@iot.id": 3,
+                                "@iot.selfLink": "http://localhost/v1.0/Observations(3)",
+                                "phenomenonTime": "2017-07-24T10:46:32.576Z",
+                                "result": 80,
+                                "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(3)/Datastream",
+                                "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(3)/FeatureOfInterest",
+                                "resultTime": null
+                            },
+                            {
+                                "@iot.id": 2,
+                                "@iot.selfLink": "http://localhost/v1.0/Observations(2)",
+                                "phenomenonTime": "2017-07-24T10:49:57.549Z",
+                                "result": 86,
+                                "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(2)/Datastream",
+                                "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(2)/FeatureOfInterest",
+                                "resultTime": null
+                            }
+                        ],
+                        "ObservedProperty": {
+                            "@iot.id": 2,
+                            "@iot.selfLink": "http://localhost:8080/v1.0/ObservedProperties(2)",
+                            "name": "Humidity",
+                            "description": "Humidity in situ",
+                            "definition": "http://www.qudt.org/qudt/owl/1.0.0/quantity/Instances.html#Humidity",
+                            "Datastreams@iot.navigationLink": "http://localhost:8080/v1.0/ObservedProperties(2)/Datastreams"
+                        }
+                    },
+                    {
+                        "@iot.id": 1,
+                        "@iot.selfLink": "http://localhost:8080/v1.0/Datastreams(1)",
+                        "name": "Temperature",
+                        "description": "Temperature measurements from Netatmo 1 at Geodan Amsterdam",
+                        "unitOfMeasurement": {
+                            "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                            "name": "Celsius",
+                            "symbol": "C"
+                        },
+                        "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                        "Thing@iot.navigationLink": "http://localhost:8080/v1.0/Datastreams(656)/Thing",
+                        "Sensor": {
+                            "@iot.id": 1,
+                            "@iot.selfLink": "http://localhost/v1.0/Sensors(1)",
+                            "name": "DHT22",
+                            "description": "Digital temperature and humidity sensor",
+                            "encodingType": "application/pdf",
+                            "metadata": "https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf",
+                            "Datastreams@iot.navigationLink": "http://localhost/v1.0/Sensors(1)/Datastreams"
+                        },
+                        "Observations": [
+                            {
+                                "@iot.id": 1,
+                                "@iot.selfLink": "http://localhost/v1.0/Observations(1)",
+                                "phenomenonTime": "2017-07-21T11:48:21.321Z",
+                                "result": 38,
+                                "Datastream@iot.navigationLink": "http://localhost/v1.0/Observations(1)/Datastream",
+                                "FeatureOfInterest@iot.navigationLink": "http://localhost/v1.0/Observations(1)/FeatureOfInterest",
+                                "resultTime": "2017-07-21T11:48:21.321Z"
+                            }
+                        ],
+                        "ObservedProperty": {
+                            "@iot.id": 1,
+                            "@iot.selfLink": "http://localhost/v1.0/ObservedProperties(1)",
+                            "name": "Temperature",
+                            "description": "Temperature in situ",
+                            "definition": "http://www.qudt.org/qudt/owl/1.0.0/quantity/Instances.html#Temperature",
+                            "Datastreams@iot.navigationLink": "http://localhost/v1.0/ObservedProperties(1)/Datastreams"
+                        }
+                    }
+                ]
+            }
+
+
+## $top examples [/top]
+The $top system query option requests the number of items in the queried collection to be included in the result. 
+A client can request a particular page of items by combining $top and $skip.
+
+### Get the latest Observation result for Datastream[GET /v1.0/Datastreams({id})/Observations?$top=1&$select=result]
+
++ Parameters
+    + id (number) - ID of Datastream to retrieve the Observation for
+
++ Request
+Retrieve the latest Observation for a specific Datastream and display only the result of the Observation
+
+    + Body
+    
++ Response 200 (application/json)
+
+    + Body
+        
+            {
+                "@iot.count": 585,
+                "@iot.nextLink": "http://localhost/v1.0/Datastreams(1)/Observations?$select=result&$top=1&$skip=1",
+                "value": [
+                    {
+                        "result": 38
+                    }
+                ]
+            }
+
+### Get the latest 5 Observation results for Datastream with result >= 20[GET /v1.0/Datastreams({id})/Observations?$filter=result ge 20&$select=result&$top=5]
+
++ Parameters
+    + id (number) - ID of Datastream to retrieve the Observation for
+
++ Request
+Retrieve the 5 latest Observations for a specific Datastream where the result is greater than 20
+
+    + Body
+    
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "@iot.count": 241,
+                "@iot.nextLink": "http://localhost/v1.0/Datastreams(1)/Observations?$filter=result ge 20&$select=result&$top=5&$skip=5",
+                "value": [
+                    {
+                        "result": 24
+                    },
+                    {
+                        "result": 33
+                    },
+                    {
+                        "result": 20
+                    },
+                    {
+                        "result": 43
+                    },
+                    {
+                        "result": 21
+                    }
+                ]
+            }    
+
+## $skip examples [/skip]
+The $skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. 
+A client can request a particular page of items by combining $top and $skip.
+
+### Get the second last Observation for Datastream[GET /v1.0/Datastreams({id})/Observations?$select=result&$skip=1]
+
++ Parameters
+    + id (number) - ID of Datastream to retrieve the Observation for
+
++ Request
+Retrieve the second last Observation for a specific Datastream and display only the result of the Observation
+
+    + Body
+    
++ Response 200 (application/json)
+
+    + Body
+        
+            {
+                "@iot.count": 585,
+                "@iot.nextLink": "http://localhost/v1.0/Datastreams(1)/Observations?$select=result&$top=1&$skip=2",
+                "value": [
+                    {
+                        "result": 23
+                    }
+                ]
+            }   
+
+## $count examples [/wcount]
+The $count system query option with a value of true specifies that the total count of items within a collection matching the request shall be returned along with the result. 
+A $count query option with a value of false (or not specified) hints that the service shall not return a count.
+The service shall return an HTTP Status code of 400 Bad Request if a value other than true or false is specified.
+
+### Get the count for a collection query [GET /v1.0/Datastreams({id})/Observations?$filter=result ge 101&$select=result&$count=true&$top=3]
+
++ Parameters
+    + id (number) - ID of Datastream to retrieve the Observation for
+
++ Request
+Retrieve the Observations for a specific Datastream where the result is greater or equal to 102, select only the result and phenomenonTime field values and return max 3 latest entries and return the total count of entities
+matching the request
+
+    + Body
+    
++ Response 200 (application/json)
+
+    + Body
+        
+            {
+                "@iot.count": 5648,
+                "@iot.nextLink": "http://localhost/v1.0/Datastreams(1)/Observations?$filter=result ge 101&$select=result&$top=3&$skip=3",
+                "value": [
+                    {
+                        "result": 181,
+                        "phenomenonTime": "2017-07-21T15:32:45.874Z",
+                    },
+                    {
+                        "result": 102,
+                        "phenomenonTime": "2017-07-21T11:48:21.321Z",
+                    },
+                    {
+                        "result": 105,
+                        "phenomenonTime": "2017-07-21T10:11:45.923Z",
+                    }
+                ]
+            }
+
+
+## $value examples [/value]
+returns the raw value for a field, $value can only be used when requesting a single field
+
+### Get the raw result value for an Observation [GET /v1.0/Observations({id})/result/$value]
+
++ Parameters
+    + id (number) - ID of Datastream to retrieve the raw Observation result for
+
++ Request
+Request an Observation result by adding the field in the url (/result) add /$value to request the raw value instead of a JSON object
+
+    + Body   
+
++ Response 200 (application/json)
+
+    + Body
+    
+            38
+
+## $ref examples [/ref]
+Request the @iot.selfLink for an entity
+
+### Get the references for Observations [GET /v1.0/Observations/$ref]
+
++ Request
+Retrieve all Observations selflinks.  
+
+    + Body   
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "@iot.count": 5,
+                "value": [
+                    {
+                        "@iot.selfLink": "http://localhost/v1.0/Observations(5)"
+                    },
+                    {
+                        "@iot.selfLink": "http://localhost/v1.0/Observations(4)"
+                    },
+                    {
+                        "@iot.selfLink": "http://localhost/v1.0/Observations(3)"
+                    },
+                    {
+                        "@iot.selfLink": "http://localhost/v1.0/Observations(2)"
+                    },
+                    {
+                        "@iot.selfLink": "http://localhost/v1.0/Observations(1)"
+                    }
+                ]
+            }
+
+# group ODATA $filter
+The $filter system query option allows clients to filter a collection of entities that are addressed by a request URL. 
+The expression specified with $filter is evaluated for each entity in the collection, and only items where the expression evaluates to true SHALL be included in the response. 
+Entities for which the expression evaluates to false or to null, or which reference properties that are unavailable due to permissions, SHALL be omitted from the response.
+
+## Logical Operators [/logical]
+
+
+### Equals [GET /v1.0/Datastreams?$filter=name eq 'test1']
+
++ Request
+Retrieve all Datastreams where name equals test1. 
+
+    + Body
+    
+### Not equals [GET /v1.0/Datastreams?$filter=name ne 'test1']
+
++ Request
+Retrieve all Datastreams where name does not equals test1. 
+
+    + Body      
+    
+### Lower than [GET /v1.0/Observations?$filter=result lt 5]
+
++ Request
+Retrieve all Observations where the result is lower than 5 
+
+    + Body        
+    
+### Lower or equals than [GET /v1.0/Observations?$filter=result le 5]
+
++ Request
+Retrieve all Observations where the result is lower or equals 5 
+
+    + Body       
+    
+### Greater than [GET /v1.0/Observations?$filter=result gt 5]
+
++ Request
+Retrieve all Observations where the result is greater than 5 
+
+    + Body      
+             
+### Greater or equals than [GET /v1.0/Observations?$filter=result ge 5]
+
++ Request
+Retrieve all Observations where the result is greater or equals 5 
+
+    + Body      
+
+### and [GET /v1.0/Observations?$filter=result ge 5 and result le 15]
+
++ Request
+Retrieve all Observations where the result is greater or equals 5 and lower or equals 15 
+
+    + Body      
+    
+### or [GET /v1.0/Observations?$filter=result lt 5 or result gt 15]
+
++ Request
+Retrieve all Observations where the result lower than 5 or greater than 15
+
+    + Body 
+    
+### not [GET /v1.0/Datastream?$filter=not endswith(description,'milk')]
+
++ Request
+Retrieve all Datastreams where the description does not end with milk
+
+    + Body     
+
+## Arithmetic Operators [/arithmetic]
+
+### add [GET /v1.0/Observations?$filter=result eq 10 add 5]
+
++ Request
+Select observations where result equals 10 + 5 = 15
+
+    + Body      
+    
+### sub [GET /v1.0/Observations?$filter=result eq 10 sub 3]
+
++ Request
+Select observations where result equals 10 - 3 = 7
+
+    + Body      
+    
+### mul [GET /v1.0/Observations?$filter=result eq 10 mul 3]
+
++ Request
+Select observations where result equals 10 * 3 = 30
+
+    + Body      
+    
+### div [GET /v1.0/Observations?$filter=result eq 21 div 3]
+
++ Request
+Select observations where result equals 21 / 3 = 7
+
+    + Body      
+    
+### mod [GET /v1.0/Observations?$filter=result mod 2 eq 0]
+
++ Request
+Select observations where result modulo 2 == 0
+
+    + Body      
+
+## String Functions [/arithmetic]
+
+### contains [GET /v1.0/Sensors?$filter=contains(name,'temperature')]
+
++ Request
+Select sensorswhere the value of field 'name' contains the string temperature
+
+    + Body      
+    
+### startswith [GET /v1.0/Sensors?$filter=startswith(name,'temp')]
+
++ Request
+Select sensors where the value of field 'name' starts with the string temp
+
+    + Body      
+    
+### endswith [GET /v1.0/Sensors?$filter=endswith(name,'sensor')]
+
++ Request
+Select sensors where the value of field 'name' ends with the string sensor
+
+    + Body          
+
+### length [GET /v1.0/Sensors?$filter=length(name) eq 18]
+
++ Request
+Select sensors where the value of field 'name' is 18 characters long
+
+    + Body     
+    
+### indexof [GET /v1.0/Sensors?$filter=indexof(name, 'sensor') eq 0]
+
++ Request
+Select sensors where indexof for the value of field 'name' with string sensor is 0
+
+    + Body     
+        
+### substringof [GET /v1.0/Sensors?$filter=substringof(name, 'sensor') eq true]
+
++ Request
+Select sensors where the value of field 'name' contains the string 'sensor'
+
+    + Body         
+    
+### trim [GET /v1.0/Sensors?$filter=trim(name) eq 'My Sensor']
+
++ Request
+Select sensors where the trimmed (removed pre and suffix whitespace) value of field 'name' equals the string 'My Sensor'
+
+    + Body       
+    
+### toupper [GET /v1.0/Sensors?$filter=toupper(name) eq 'SENSOR NAME 1']
+
++ Request
+Select sensors where the value of field 'name' converted to upper case equals the string 'SENSOR NAME 1'
+
+    + Body       
+    
+### tolower [GET /v1.0/Sensors?$filter=tolower(name) eq 'SENSOR NAME 1']
+
++ Request
+Select sensors where the value of field 'name' converted to upper case equals the string 'sensor name 1'
+
+    + Body           
+    
+### concat [GET /v1.0/Sensors?$filter=concat(name,'!') eq 'sensor name 1!']
+
++ Request
+Select sensors where the value of field 'name' converted to lower case equals the string 'sensor name 1'
+
+    + Body               
+
+## Geospatial Functions [/geo]
+In order to support spatial relationship functions, SensorThings API defines nine additional geospatial functions based on the spatial relationship between two geometry objects in addition to the odata geo. functions. 
+The spatial relationship functions are defined in the OGC Simple Feature Access specification [OGC 06-104r4 part 1, clause 6.1.2.3]. 
+The names of these nine functions start with a prefix “st_” following the OGC Simple Feature Access specification [OGC 06-104r4]. 
+In addition, the Well-Known Text (WKT) format is the default input geometry for these nine functions.
+
+### geo.distance [GET /v1.0/Locations?$filter=geo.distance(location, geography'POINT(-122 43)') gt 1]
+
++ Request
+Select Locations where the distance between geometry from location field and geography'POINT(-122 43)') are greater than 1
+
+    + Body               
+    
+### geo.length [GET /v1.0/Locations?$filter=geo.length(location) gt 0]
+
++ Request
+Select Locations where geometry from location field is greater than 0
+
+    + Body        
+    
+### geo.intersects [GET /v1.0/Locations?$filter=geo.intersects(location, geography'POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))')]
+
++ Request
+Select Locations where the geometry from location field intersects with geography'POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))'
+
+    + Body        
+    
+### st_within [GET /v1.0/Locations?$filter=st_within(location, geography'POLYGON((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')]
+
++ Request
+st_within returns true if the geometry A is completely inside geometry B  
+Select Locations where the geometry from location field is within geography'POLYGON((-180 -90, -180 90, 180 90, 180 -90, -180 -90))'
+
+    + Body        
+    
+### st_intersects [GET /v1.0/Locations?$filter=st_intersects(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')]
+
++ Request
+st_intersects returns TRUE if the Geometries/Geography "spatially intersect in 2D" - (share any portion of space) and FALSE if they don't (they are Disjoint). For geography -- tolerance is 0.00001 meters (so any points that close are considered to intersect)  
+Select Locations where the geometry from location field intersects with geography'POLYGON((-180 -90, -180 90, 180 90, 180 -90, -180 -90))'
+
+    + Body        
+                
+### st_equals [GET /v1.0/Locations?$filter=st_equals(location, geography'POINT (-117.123 54.123)')]
+
++ Request
+st_equals returns true if the given geometries represent the same geometry. Directionality is ignored.  
+Select Locations where the geometry from location field equals geography'POINT (-117.123 54.123)'
+
+    + Body        
+                    
+### st_disjoint [GET /v1.0/Locations?$filter=st_disjoint(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')]
+
++ Request
+st_disjoint returns true if the Geometries do not "spatially intersect" - if they do not share any space together.  
+Select Locations where the geometry from location field does not intersect with geography'POLYGON((-180 -90, -180 90, 180 90, 180 -90, -180 -90))'
+
+    + Body        
+            
+### st_touches [GET /v1.0/Locations?$filter=st_touches(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')]
+
++ Request
+st_touches returns true if the geometries have at least one point in common, but their interiors do not intersect.  
+Select Locations where the geometry from location field touches geography'POLYGON((-180 -90, -180 90, 180 90, 180 -90, -180 -90))'
+
+    + Body        
+            
+### st_overlaps [GET /v1.0/Locations?$filter=st_overlaps(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')]
+
++ Request
+st_overlaps returns true if the Geometries share space, are of the same dimension, but are not completely contained by each other.  
+Select Locations where the geometry from location field overlaps geography'POLYGON((-180 -90, -180 90, 180 90, 180 -90, -180 -90))'
+
+    + Body        
+            
+### st_crosses [GET /v1.0/Locations?$filter=st_crosses(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')]
+
++ Request
+st_crosses returns true if the supplied geometries have some, but not all, interior points in common.  
+Select Locations where the geometry from location field crosses geography'POLYGON((-180 -90, -180 90, 180 90, 180 -90, -180 -90))'
+
+    + Body        
+            
+### st_contains [GET /v1.0/Locations?$filter=st_contains(location, geography'POLYGON ((-180 -90, -180 90, 180 90, 180 -90, -180 -90))')]
+
++ Request
+st_contains returns true if and only if no points of B lie in the exterior of A, and at least one point of the interior of B lies in the interior of A.  
+Select Locations where the geometry from location field contains geography'POLYGON((-180 -90, -180 90, 180 90, 180 -90, -180 -90))'
+
+    + Body        
+            
+### st_relate [GET /v1.0/Locations?$filter=st_relate(location, geography'POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))', 'T********')]
+
++ Request
+st_relate returns true if this Geometry is spatially related to anotherGeometry, by testing for intersections between the Interior, Boundary and Exterior of the two geometries as specified by the values in the 
+intersectionMatrixPattern. If no intersectionMatrixPattern is passed in, then returns the maximum intersectionMatrixPattern that relates the 2 geometries.  
+Select Locations where the geometry from location field relates with geography'POLYGON ((30 10, 10 20, 20 40, 40 40, 30 10))' where a intersects b, geometries a and b have at least one point in common ('T********')
+
+    + Body        
+
+## Date Functions [/date]
+            
+### day [GET /v1.0/Observations?$filter=day(phenomenonTime) eq 8]
+
++ Request
+Select Observations where the phenomenonTime field value was on the 8th day of the month
+
+    + Body        
+            
+### hour [GET /v1.0/Observations?$filter=hour(phenomenonTime) eq 12]
+
++ Request
+Select Observations where the phenomenonTime field value contains a datetime where the hour was in hour 12 of the day
+
+    + Body        
+            
+### minute [GET /v1.0/Observations?$filter=minute(phenomenonTime) eq 8]
+
++ Request
+Select Observations where the phenomenonTime field value minute was in minute 8
+
+    + Body        
+            
+### second [GET /v1.0/Observations?$filter=second(phenomenonTime) eq 20]
+
++ Request
+Select Observations where the phenomenonTime field value second was in second 20
+
+    + Body        
+            
+### month [GET /v1.0/Observations?$filter=month(phenomenonTime) eq 8]
+
++ Request
+Select Observations where the phenomenonTime field value month was in month 8
+
+    + Body    
+    
+### year [GET /v1.0/Observations?$filter=year(phenomenonTime) eq 2017]
+
++ Request
+Select Observations where the phenomenonTime field value year was in minute 8
+
+    + Body    
+    
+### fractionalsecond [GET /v1.0/Observations?$filter=fractionalseconds(phenomenonTime) eq 733]
+
++ Request
+Select Observations where the phenomenonTime field value milisecond was in ms 733
+
+    + Body    
+    
+    
+### now [GET /v1.0/Observations?$filter=phenomenonTime ge now()]
+
++ Request
+Select Observations where the phenomenonTime field value is greater or equals to the current datetime
+
+    + Body    
+    
+    
+### mindatetime [GET /v1.0/Observations?$filter=phenomenonTime gt mindatetime()]
+
++ Request
+Select Observations where the phenomenonTime field value is lower than the lowest possible datetime
+
+    + Body    
+    
+    
+### maxdatetime [GET /v1.0/Observations?$filter=phenomenonTime lt maxdatetime()]
+
++ Request
+Select Observations where the phenomenonTime field value is less than the highest possible date time
+
+    + Body    
+    
+    
+### totaloffsetminutes [GET /v1.0/Observations?$filter=totaloffsetminutes(phenomenonTime) eq 0]
+
++ Request
+Select Observations where the phenomenonTime field value has 0 minutes offset
+
+    + Body    
+    
+    
+### date [GET /v1.0/Observations?$filter=date(phenomenonTime) eq date('2017-07-04')]
+
++ Request
+Select Observations where the phenomenonTime field value contains the date 2017-07-04
+
+    + Body    
+    
+    
+### time [GET /v1.0/Observations?$filter=time(phenomenonTime) eq time('14:31:24.733Z')]
+
++ Request
+Select Observations where the phenomenonTime field value contains 14:31:24.733Z
+
+    + Body    
+    
+## Math Functions [/math]
+    
+### round [GET /v1.0/Observations?$filter=round(result) eq 10]
+
++ Request
+Select Observations where the result converted to an integer equals 10
+
+    + Body 
+    
+### floor [GET /v1.0/Observations?$filter=floor(result) eq 10]
+
++ Request
+Select Observations where the result rounded to the lower integer value equals 10
+
+    + Body 
+    
+### ceiling [GET /v1.0/Observations?$filter=ceiling(result) eq 10]
+
++ Request
+Select Observations where the result rounded to the upper integer value equals 10
+
+    + Body 
+    
+## Relation Filtering [/relation]
+
+### Get Observations where related Datastream id equals 1 (Not yet implemented) [GET /v1.0/Observations?$filter=Datastream/id eq ‘1’]
+
++ Request
+Get Observations where related Datastream id equals 1, related entity filtering is not yet implemented in GOST
+
+    + Body
