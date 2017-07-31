@@ -3758,7 +3758,7 @@ Select sensors where indexof for the value of field 'name' with string sensor is
 
     + Body     
         
-### substringof [GET /v1.0/Sensors?$filter=substringof(name, 'sensor') eq true]
+### substringof [GET /v1.0/Sensors?$filter=substringof('sensor', name) eq true]
 
 + Request
 Select sensors where the value of field 'name' contains the string 'sensor'
