@@ -141,7 +141,7 @@ $ curl http://localhost:8080/v1.0/Sensors?$filter=indexof(name, 'sensor') eq 0
 - substringof
 
 ```
-$ curl http://localhost:8080/v1.0/Sensors?$filter=substringof(name, 'sensor') eq true
+$ curl http://localhost:8080/v1.0/Sensors?$filter=substringof('sensor', name) eq true
 ```
 
 - trim
