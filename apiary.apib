@@ -3761,7 +3761,7 @@ Select sensors where indexof for the value of field 'name' with string sensor is
 ### substringof [GET /v1.0/Sensors?$filter=substringof('sensor', name) eq true]
 
 + Request
-Select sensors where the value of field 'name' contains the string 'sensor'
+Select sensors where the value of field 'name' contains the string 'sensor', eq true is default and is mandatory, 'eq false' can be used to retrieve entities not containing the string 'sensor' in field name
 
     + Body         
     
