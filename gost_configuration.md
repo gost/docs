@@ -35,7 +35,7 @@ mqtt:<br />
 ##  GOST server configuration using environment variables
 The config.yaml parameters can be overruled with the following environment variables, check default config.yaml above for the variable descriptions.
 
-**server**  
+**Gost server configuration**  
 GOST_SERVER_NAME  
 GOST_SERVER_HOST  
 GOST_SERVER_PORT  
@@ -46,7 +46,7 @@ GOST_SERVER_HTTPS
 GOST_SERVER_HTTPS_KEY  
 GOST_SERVER_HTTPS_CERT  
 
-**db**  
+**Gost server database connection**  
 GOST_DB_HOST  
 GOST_DB_SCHEMA  
 GOST_DB_DATABASE  
@@ -56,7 +56,7 @@ GOST_DB_PASSWORD
 GOST_DB_MAX_IDLE_CONS  
 GOST_DB_MAX_OPEN_CONS  
 
-**mqtt**  
+**Gost server mqtt connection**  
 GOST_MQTT_ENABLED  
 GOST_MQTT_HOST  
 GOST_MQTT_PORT
