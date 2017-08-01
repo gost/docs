@@ -1,10 +1,15 @@
-## GOST server Configuration
+## GOST server configuration using yaml
 
-GOST server uses a default configuration file config.yaml, to specify your own file run gost with the -config flag, specifying the location of your config file. 
+GOST server uses a default config.yaml configuration file, you can edit this file or specify your own file by running gost with the -config flag. 
 
+```sh
+./gost -config myconfig.yml
+```
+
+**default config.yaml**  
 server: <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name: GOST Server (name of the webserver)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host: localhost (host of webserver, set to 0.0.0.0 if hosting on external machine)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host: (host of webserver, set to 0.0.0.0 if hosting on external machine)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;port: 8080 (port of webserver)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;externalUri: http://localhost:8080/ (change to the uri where users can reach the service)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxEntityResponse: 50 (max entities to return if no $top and $skip is given)<br />
@@ -27,8 +32,8 @@ mqtt:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host: localhost (host of the MQTT broker)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;port: 1883 (port of the MQTT broker)<br />
 
-## Environment variables
-The config.yaml parameters can be overruled with the following environment variables
+##  GOST server configuration using environment variables
+The config.yaml parameters can be overruled with the following environment variables, check default config.yaml above for the variable descriptions.
 
 **server**  
 GOST_SERVER_NAME  
