@@ -88,5 +88,8 @@ export GOST_DB_HOST=192.168.40.10
             GOST_SERVER_EXTERNAL_URI: http://fancy_server:8181
 ```
 
+**Example setting GOST environment variable in docker run**
 
-
+```
+    $ docker run -d -p 8080:8080 -t -e GOST_DB_HOST=192.168.40.10 -e GOST_DB_DATABASE=gost
+```
