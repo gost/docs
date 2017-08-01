@@ -3,7 +3,7 @@
 GOST server uses a default config.yaml configuration file, you can edit this file or specify your own file by running gost with the -config flag. 
 
 ```sh
-./gost -config myconfig.yml
+./gost -config myconfig.yaml
 ```
 
 **default config.yaml**  
