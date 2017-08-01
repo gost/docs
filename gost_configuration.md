@@ -1,14 +1,17 @@
-## GOST Configuration
+## GOST server Configuration
 
-Default configuration file: config.yaml
+GOST server uses a default configuration file config.yaml, to specify your own file run gost with the -config flag, specifying the location of your config file. 
 
 server: <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name: GOST Server (name of the webserver)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host: localhost (host of webserver, set to 0.0.0.0 if hosting on external machine)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;port: 8080 (port of webserver)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;externalUri: http://localhost:8080/ (change to the uri where users can reach the service)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxEntityResponse: 50 (Max entities to return if no $top and $skip is given, not implemented yet)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;indentedJson: true (return indented JSON, not implemented yet)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxEntityResponse: 50 (max entities to return if no $top and $skip is given)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;indentedJson: true (return indented JSON)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https: false (ron GOST on HTTPS true/false)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;httpsCert: (location of https cert file)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;httpsKey: (location of https key file)<br />
 database:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host: localhost (location of PostGIS server)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;port: 5432 (port of PostGIS database)<br />
@@ -17,34 +20,56 @@ database:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;database: gost (PostGIS database to use)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;schema: v1 (schema to use)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssl: false (SSL enabled, not implemented yet)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxIdleConns: 30 (maximum idle connections)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxOpenConns: 100 (maximum open connections)<br />
 mqtt:<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enabled: true (enable MQTT)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host: iot.eclipse.org (host of the MQTT broker)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enabled: true (true/false to enable/disable MQTT)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host: localhost (host of the MQTT broker)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;port: 1883 (port of the MQTT broker)<br />
 
-The following configuration parameters can be overruled 
-from the following environment variables:
+## Environment variables
+The config.yaml parameters can be overruled with the following environment variables
 
-db: GOST_DB_HOST, GOST_DB_DATABASE, GOST_DB_PORT, GOST_DB_USER, GOST_DB_PASSWORD. 
+**server**  
+GOST_SERVER_NAME  
+GOST_SERVER_HOST  
+GOST_SERVER_PORT  
+GOST_SERVER_EXTERNAL_URI  
+GOST_SERVER_MAX_ENTITIES  
+GOST_SERVER_INDENT_JSON  
+GOST_SERVER_HTTPS  
+GOST_SERVER_HTTPS_KEY  
+GOST_SERVER_HTTPS_CERT  
 
-mqtt: GOST_MQTT_HOST, GOST_MQTT_PORT
+**db**  
+GOST_DB_HOST  
+GOST_DB_SCHEMA  
+GOST_DB_DATABASE  
+GOST_DB_PORT  
+GOST_DB_USER  
+GOST_DB_PASSWORD  
+GOST_DB_MAX_IDLE_CONS  
+GOST_DB_MAX_OPEN_CONS  
 
-server: GOST_SERVER_HOST, GOST_SERVER_PORT, GOST_SERVER_EXTERNAL_URI
+**mqtt**  
+GOST_MQTT_ENABLED  
+GOST_MQTT_HOST  
+GOST_MQTT_PORT
+GOST_MQTT_SSL_ENABLED  
 
-Example setting GOST environment variable on Windows:
+**Example setting GOST environment variable on Windows**
 
 ```sh
 set GOST_DB_HOST=192.168.40.10
 ```
 
-Example setting GOST environment variable on Mac/Linux:
+**Example setting GOST environment variable on Mac/Linux**
 
 ```sh
 export GOST_DB_HOST=192.168.40.10
 ```
 
-If you are using Docker the environment variables can be set in the docker-compose file. For example, change the external adress
-via gost_server_external_uri: 
+**Example setting GOST environment variable in docker-compose.yml**
 
 ```
     gost:
