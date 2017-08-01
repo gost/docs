@@ -25,22 +25,22 @@ mqtt:<br />
 The following configuration parameters can be overruled 
 from the following environment variables:
 
-db: gost_db_host, gost_db_database, gost_db_port, gost_db_user, gost_db_password. 
+db: GOST_DB_HOST, GOST_DB_DATABASE, GOST_DB_PORT, GOST_DB_USER, GOST_DB_PASSWORD. 
 
-mqtt: gost_mqtt_host, gost_mqtt_port
+mqtt: GOST_MQTT_HOST, GOST_MQTT_PORT
 
-server: gost_server_host, gost_server_port, gost_server_external_uri, gost_client_content
+server: GOST_SERVER_HOST, GOST_SERVER_PORT, GOST_SERVER_EXTERNAL_URI
 
 Example setting GOST environment variable on Windows:
 
 ```sh
-set gost_db_host=192.168.40.10
+set GOST_DB_HOST=192.168.40.10
 ```
 
 Example setting GOST environment variable on Mac/Linux:
 
 ```sh
-export gost_db_host=192.168.40.10
+export GOST_DB_HOST=192.168.40.10
 ```
 
 If you are using Docker the environment variables can be set in the docker-compose file. For example, change the external adress
@@ -53,9 +53,9 @@ via gost_server_external_uri:
             - mosquitto
             - gost-db
         environment:
-            gost_db_host: gost-db
-            gost_mqtt_host: mosquitto
-            gost_server_external_uri: http://fancy_server:8181
+            GOST_DB_HOST: gost-db
+            GOST_MQTT_HOST: mosquitto
+            GOST_SERVER_EXTERNAL_URI: http://fancy_server:8181
 ```
 
 
