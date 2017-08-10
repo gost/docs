@@ -18,6 +18,13 @@ A:
 | OM_Observation         | http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Observation         | Any               |
 | OM_TruthObservation    | http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_TruthObservation    | boolean           |
 
+Q: Whats the difference between Observation.ResultTime and Observation.PhenomenonTime?
+
+A: 
+
+Observation.ResultTime: The time of the Observation's result was generated.
+
+Observation.PhenomenonTime: The time instant or period of when the Observation happen
 
 ## Docker
 
