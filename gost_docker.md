@@ -11,7 +11,12 @@ For more information about the containers check the projects on github: [server]
 The docker images can run separately, or running in a combined way using the Dockercompose file.
 
 ## Running GOST with Docker-compose
-Our default docker-compose file comes with a MQTT server (Mosquitto) and Node-RED, a handy tool that can be used with GOST.  
+Our default docker-compose file comes with a MQTT server (Mosquitto) and Node-RED, a handy tool that can be used with GOST.
+
+Architecture:
+
+<img src="./images/docker-compose.png"/>
+
 Use the tag latest for the latest development version, otherwise use a tag like '0.5' for more stable versions.   
 
 Running (unstable) latest build of GOST:
