@@ -15,7 +15,7 @@ Our default docker-compose file comes with a MQTT server (Mosquitto) and Node-RE
 
 Architecture:
 
-<img src="./images/docker-compose.png"/>
+<kbd><img src="./images/docker-compose.png"/></kbd>
 
 Use the tag latest for the latest development version, otherwise use a tag like '0.5' for more stable versions.   
 
