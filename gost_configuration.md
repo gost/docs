@@ -33,7 +33,7 @@ mqtt:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;port: 1883 (port of the MQTT broker)<br />
 logger:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fileName: gost (filename to log to, leave blank to log to stdout)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verbose: true (true for logging debug and up, false to log from info and up)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verbose: true (true for logging debug and up, false to log from warn and up)<br />
 
 ##  GOST server configuration using environment variables
 The config.yaml parameters can be overruled with the following environment variables, check default config.yaml above for the variable descriptions.
