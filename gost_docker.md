@@ -31,19 +31,24 @@ $ docker-compose -f docker-compose-0.5.yml up
 ```
 
 ## Running GOST with docker run
-- Start geodan/gost-db which creates an user postgres with password postgres and initialises a database named gost</br>
-- Start geodan/gost and set info to connect to gost-db, gost will be available at http://localhost:8080/v1.0</br>
+- Start geodan/gost-db which creates an user postgres with password postgres and initialises a database named gost
+- Start geodan/gost and set info to connect to gost-db, gost will be available at http://localhost:8080/v1.0
 - Start geodan/gost-dashboard and link gost to use GOST trough nginx, gost + dashboard available at http://localhost:8081
 
 ```
-$ docker run -d -p 5432:5432 -e POSTGRES_DB=gost -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --name gost-db geodan/gost-db</br>
-$ docker run -d -p 8080:8080 --link gost-db:gost-db -e gost_db_host=gost-db -e gost_db_user=postgres -e gost_db_password=postgres --name gost geodan/gost</br>
+$ docker run -d -p 5432:5432 -e POSTGRES_DB=gost -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --name gost-db geodan/gost-db
+$ docker run -d -p 8080:8080 --link gost-db:gost-db -e gost_db_host=gost-db -e gost_db_user=postgres -e gost_db_password=postgres --name gost geodan/gost
 $ docker run -d -p 8081:8080 --link gost:gost --name gost-dashboard geodan/gost-dashboard		
 ```
 
 For making connection to external database use environmental variables gost_db_host, gost_db_port, gost_db_user, gost_db_password
 ```
 $ docker run -d -p 8080:8080 -t -e gost_db_host=192.168.40.10 -e gost_db_database=gost --name gost geodan/gost
+```
+
+If you want to load your own config file, mount a location with your config.yaml file to /gostserver/config. If the filename does not equals config.yaml you have to run gost with the -config parameter:
+```
+$ docker run -v myconfiglocation:/gostserver/config geodan/gost -config /gostserver/config/myconfig.yaml
 ```
 
 ## Building GOST service
