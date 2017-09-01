@@ -38,8 +38,8 @@ Execute the following commands to install GOST on the Raspberry Pi.
 Note: downloading new images can take some time... So grab a coffee and relax while GOST is installing... 
 
 ```
-$ wget https://raw.githubusercontent.com/gost/docker-compose/master/docker-compose-rpi.yml
-$ sudo docker-compose -f docker-compose-rpi.yml up
+$ curl https://raw.githubusercontent.com/gost/docker-compose/master/docker-compose-rpi.yml > docker-compose.yml
+$ docker-compose up
 ```
 
 System is ready when these kind of messages appear:
