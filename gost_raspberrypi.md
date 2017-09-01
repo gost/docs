@@ -1,6 +1,6 @@
 # How to run GOST on Raspberry Pi
 
-Warning: Raspberry Pi support for GOST is in experimental phase! Maybe it works if you are lucky.
+Warning: Raspberry Pi support for GOST is in experimental phase!
 
 ## Flash card
 
