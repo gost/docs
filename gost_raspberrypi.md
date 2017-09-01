@@ -48,4 +48,4 @@ $ sudo docker-compose -f docker-compose-rpi.yml up
 
 - Create a thing in dashboard
 
-If the dashboard is working, you can continue with the <a href="https://github.com/gost/workshops/blob/master/2_configuration.md">Workshop exercises</a> to configure GOST. Make sure to replace 'localhost' with 'black-pearl' in the exercises. 
+If the dashboard is working, you can continue with the <a href="https://github.com/gost/workshops/blob/master/2017_foss4g_boston/3_configuration.md">Workshop exercises</a> to configure GOST. Make sure to replace 'localhost' with 'black-pearl' in the exercises. 
