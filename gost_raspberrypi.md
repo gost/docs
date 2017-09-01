@@ -22,7 +22,8 @@ After installation, you should be able to loging on machine 'black-pearl' with '
 
 ```
 $ ssh pirate@black-pearl
-``
+```
+
 Now update the installation:
 
 ```
