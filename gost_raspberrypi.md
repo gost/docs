@@ -18,7 +18,7 @@ Installation instructions:
 
 Use the latest Hypriot image: https://github.com/hypriot/image-builder-rpi/releases/download/v1.5.0/hypriotos-rpi-v1.5.0.img.zip (29.06.2017)
 
-After installation, you should be able to loging on machine 'black-pearl' with 'pirate' as username, password 'hypriot'
+After installation, you should be able to login on machine 'black-pearl' with 'pirate' as username, password 'hypriot'
 
 ```
 $ ssh pirate@black-pearl
