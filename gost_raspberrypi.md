@@ -1,54 +1,50 @@
-# How to run SensorThings GOST on Raspberry Pi
+# How to run GOST on Raspberry Pi
 
-## Version
+Warning: Raspberry Pi support for GOST is in experimental phase! Maybe it works if you are lucky.
 
-Check version of your Raspberry Pi:
+## Flash card
 
-This document is written for Raspian Jessie.
+For running GOST we need to have a flash card with Docker installed.
 
-```
-pi@raspberrypi:~ $ lsb_release -a
-No LSB modules are available.
-Distributor ID:	Raspbian
-Description:	Raspbian GNU/Linux 8.0 (jessie)
-Release:	8.0
-Codename:	jessie
-pi@raspberrypi:~ $ 
-```
+One easy option is to use the <a href="https://blog.hypriot.com/">Hypriot</a> images, it comes with Docker tools installed.
 
-## Install Docker
+Installation instructions:
 
-```
-pi@raspberrypi:~ $ curl -sSL get.docker.com | sh
-```
+- For Mac: https://blog.hypriot.com/getting-started-with-docker-and-mac-on-the-raspberry-pi/
 
-For safety, reboot the Raspberrypi.
+- For Windows: https://blog.hypriot.com/getting-started-with-docker-and-windows-on-the-raspberry-pi/
 
-Check installation with:
+- For Linux: https://blog.hypriot.com/getting-started-with-docker-and-linux-on-the-raspberry-pi/
+
+Use the latest Hypriot image: https://github.com/hypriot/image-builder-rpi/releases/download/v1.5.0/hypriotos-rpi-v1.5.0.img.zip (29.06.2017)
+
+After installation, you should be able to loging on machine 'black-pearl' with 'pirate' as username, password 'hypriot'
 
 ```
-pi@raspberrypi:~ $ sudo docker info
-```
-Now install docker-compose:
+$ ssh pirate@black-pearl
+``
+Now update the installation:
 
 ```
-pi@raspberrypi:~ $ sudo apt-get install python-pip
-
-pi@raspberrypi:~ $ sudo pip install docker-compose
-
+$ sudo apt-get update
+$ sudo apt-get upgrade docker-hypriot docker-compose
 ```
 
 ## Install GOST
 
-Note: downloading new images can take some time... 
+Execute the following commands to install GOST on the Raspberry Pi.
+
+Note: downloading new images can take some time... So grab a coffee and relax while GOST is installing... 
 
 ```
-pi@raspberrypi:~ $ wget https://raw.githubusercontent.com/gost/docker-compose/master/docker-compose-rpi.yml
-pi@raspberrypi:~ $ sudo docker-compose -f docker-compose-rpi.yml up
+$ wget https://raw.githubusercontent.com/gost/docker-compose/master/docker-compose-rpi.yml
+$ sudo docker-compose -f docker-compose-rpi.yml up
 ```
 
 ## Check installation
 
-- Dashboard: In browser go to http://raspberrypi:8080
+- Dashboard: In browser go to http://black-pearl:8080
 
-If dashboard is working, you can continue with the <a href="https://github.com/gost/workshops/blob/master/2_configuration.md">Workshop exercises</a> to configure GOST. Make sure to replace 'localhost' with 'raspberrypi' in the exercises. 
+- Create a thing in dashboard
+
+If the dashboard is working, you can continue with the <a href="https://github.com/gost/workshops/blob/master/2_configuration.md">Workshop exercises</a> to configure GOST. Make sure to replace 'localhost' with 'black-pearl' in the exercises. 
