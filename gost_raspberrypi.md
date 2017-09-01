@@ -46,6 +46,6 @@ $ sudo docker-compose -f docker-compose-rpi.yml up
 
 - Dashboard: In browser go to http://black-pearl:8080
 
-- Create a thing in dashboard
+- Node-RED: In browser go to http://black-pearl:1880
 
 If the dashboard is working, you can continue with the <a href="https://github.com/gost/workshops/blob/master/2017_foss4g_boston/3_configuration.md">Workshop exercises</a> to configure GOST. Make sure to replace 'localhost' with 'black-pearl' in the exercises. 
