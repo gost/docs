@@ -42,6 +42,22 @@ $ wget https://raw.githubusercontent.com/gost/docker-compose/master/docker-compo
 $ sudo docker-compose -f docker-compose-rpi.yml up
 ```
 
+System is ready when these kind of messages appear:
+
+```
+gost-db_1    | LOG:  MultiXact member wraparound protections are now enabled
+gost-db_1    | LOG:  autovacuum launcher started
+gost-db_1    | LOG:  database system is ready to accept connections
+node-red_1   | 1 Sep 10:42:03 - [info] Dashboard version 2.2.1 started at /ui
+node-red_1   | 1 Sep 10:42:04 - [info] Settings file  : /root/.node-red/settings.js
+node-red_1   | 1 Sep 10:42:04 - [info] User directory : /root/.node-red
+node-red_1   | 1 Sep 10:42:04 - [info] Flows file     : /root/.node-red/flows_d25030c9374a.json
+node-red_1   | 1 Sep 10:42:04 - [info] Creating new flow file
+node-red_1   | 1 Sep 10:42:04 - [info] Starting flows
+node-red_1   | 1 Sep 10:42:04 - [info] Started flows
+node-red_1   | 1 Sep 10:42:04 - [info] Server now running at http://127.0.0.1:1880/
+```
+
 ## Check installation
 
 - Dashboard: In browser go to http://black-pearl:8080
