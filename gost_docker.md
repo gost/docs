@@ -78,11 +78,5 @@ pi@raspberrypi:~/dev/go/src/github.com/Geodan/gost $ sudo docker push geodan/rpi
 The data of the Postgis is stored on a Docker volume. If you want to remove the data use commands like:
 
 ```
-$ docker volume rm dockercompose_postgis
-
-Error response from daemon: unable to remove volume: remove dockercompose_postgis: volume is in use - [e31cec73654b8c19381bb1fa3b3f9f2f3dd710af3464d3321c19c54564e94e5f]
-
-$ docker rm e31
-
-$ docker volume rm dockercompose_postgis
+$ docker-compose down -v
 ```
