@@ -37,13 +37,13 @@ $ docker-compose -f docker-compose-0.5.yml up
 
 ```
 $ docker run -d -p 5432:5432 -e POSTGRES_DB=gost -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres --name gost-db geodan/gost-db
-$ docker run -d -p 8080:8080 --link gost-db:gost-db -e gost_db_host=gost-db -e gost_db_user=postgres -e gost_db_password=postgres --name gost geodan/gost
+$ docker run -d -p 8080:8080 --link gost-db:gost-db -e GOST_DB_HOST=gost-db -e GOST_DB_USER=postgres -e GOST_DB_PASSWORD=postgres --name gost geodan/gost
 $ docker run -d -p 8081:8080 --link gost:gost --name gost-dashboard geodan/gost-dashboard		
 ```
 
-For making connection to external database use environmental variables gost_db_host, gost_db_port, gost_db_user, gost_db_password
+For making connection to external database use environmental variables GOST_DB_HOST, GOST_DB_PORT, GOST_DB_DATABASE, GOST_DB_USER, GOST_DB_PASSWORD
 ```
-$ docker run -d -p 8080:8080 -t -e gost_db_host=192.168.40.10 -e gost_db_database=gost --name gost geodan/gost
+$ docker run -d -p 8080:8080 -t -e GOST_DB_HOST=192.168.40.10 -e GOST_DB_DTABASE=gost --name gost geodan/gost
 ```
 
 If you want to load your own config file, mount a location with your config.yaml file to /gostserver/config. If the filename does not equals config.yaml you have to run gost with the -config parameter:
