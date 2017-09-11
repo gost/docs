@@ -18,6 +18,14 @@ Installation instructions:
 
 Use the latest Hypriot image: https://github.com/hypriot/image-builder-rpi/releases/download/v1.5.0/hypriotos-rpi-v1.5.0.img.zip (29.06.2017)
 
+TL;DR for Mac:
+
+```
+$ diskutil list
+$ diskutil unmountdisk /dev/disk2 
+$ sudo dd if=hypriotos-rpi-v1.5.0.img of=/dev/rdisk2 bs=1m
+```
+
 After installation, you should be able to login on machine 'black-pearl' with 'pirate' as username, password 'hypriot'
 
 ```
