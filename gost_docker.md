@@ -1,6 +1,6 @@
 # GOST Docker support
 
-For getting GOST to work in Docker there are three images available on Docker Hub
+For getting GOST to work in Docker there are three images available on Docker Hub:
 
 - [geodan/gost](https://hub.docker.com/r/geodan/gost/) containing the GOST server;
 - [geodan/gost-db](https://hub.docker.com/r/geodan/gost-db/) containing a configured PostGIS database; 
