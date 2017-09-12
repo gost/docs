@@ -30,6 +30,15 @@ $ wget https://raw.githubusercontent.com/gost/docker-compose/master/docker-compo
 $ docker-compose -f docker-compose-0.5.yml up
 ```
 
+or on Raspberry Pi (experimental):
+```
+$ wget https://raw.githubusercontent.com/gost/docker-compose/master/docker-compose-rpi.yml
+
+$ sudo docker-compose -f docker-compose-rpi.yml up
+```
+
+For a complete tutorial about installing GOST on Raspberry Pi see https://github.com/gost/docs/blob/master/gost_raspberrypi.md
+
 ## Removing database
 
 The data of the Postgis is stored on a Docker volume. If you want to remove the data use commands like:
