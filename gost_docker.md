@@ -42,7 +42,7 @@ For a complete tutorial about installing GOST on Raspberry Pi see https://github
 
 ## Removing database
 
-The data of the Postgis is stored on a Docker volume. If you want to remove the data use commands like:
+The data of the PostGIS is stored on a Docker volume. If you want to remove the data use commands like:
 
 ```
 $ docker-compose down -v
