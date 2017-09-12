@@ -6,7 +6,7 @@ For getting GOST to work in Docker there are three images available on Docker Hu
 - [geodan/gost-db](https://hub.docker.com/r/geodan/gost-db/) containing an already configured postgis database  
 - [geodan/gost-dashboard](https://hub.docker.com/r/geodan/gost-dashboard/) containing nginx and the GOST dashboard  
 
-For more information about the containers check the projects on github: [geodan/gosts](https://github.com/gost/server) - [geodan/gost-db](https://github.com/gost/gost-db) - [ggeodan/ost-dashboard](https://github.com/gost/dashboard)
+For more information about the containers check the projects on github: [geodan/gosts](https://github.com/gost/server) - [geodan/gost-db](https://github.com/gost/gost-db) - [geodan/gost-dashboard](https://github.com/gost/dashboard)
 
 The docker images can run separately, or running in a combined way using the Docker-compose file.
 
