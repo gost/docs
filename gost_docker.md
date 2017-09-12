@@ -2,13 +2,13 @@
 
 For getting GOST to work in Docker there are three images available on Docker Hub
 
-- [Server](https://hub.docker.com/r/geodan/gost/) containing the GOST server  
-- [gost-db](https://hub.docker.com/r/geodan/gost-db/) containing an already configured postgis database  
-- [gost-dashboard](https://hub.docker.com/r/geodan/gost-dashboard/) containing nginx and the GOST dashboard  
+- [geodan/gost](https://hub.docker.com/r/geodan/gost/) containing the GOST server  
+- [geodan/gost-db](https://hub.docker.com/r/geodan/gost-db/) containing an already configured postgis database  
+- [geodan/gost-dashboard](https://hub.docker.com/r/geodan/gost-dashboard/) containing nginx and the GOST dashboard  
 
-For more information about the containers check the projects on github: [server](https://github.com/gost/server) - [gost-db](https://github.com/gost/gost-db) - [gost-dashboard](https://github.com/gost/dashboard)
+For more information about the containers check the projects on github: [geodan/gosts](https://github.com/gost/server) - [geodan/gost-db](https://github.com/gost/gost-db) - [ggeodan/ost-dashboard](https://github.com/gost/dashboard)
 
-The docker images can run separately, or running in a combined way using the Dockercompose file.
+The docker images can run separately, or running in a combined way using the Docker-compose file.
 
 ## Running GOST with Docker-compose
 Our default docker-compose file comes with a MQTT server (Mosquitto) and Node-RED, a handy tool that can be used with GOST.
