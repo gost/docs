@@ -83,7 +83,7 @@ body:
 }
 
 ```
-$ curl -X POST -H "content-type:application/json" http://localhost:8080/v1.0/Datastreams
+$ curl -X POST -H "content-type:application/json" http://localhost:8080/v1.0/Things
 
 Create a Thing with Location and Datastream and Observations
 
