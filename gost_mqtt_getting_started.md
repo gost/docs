@@ -64,6 +64,15 @@ function onMessageArrived(message) {
 }
 ```
 
+When using a secure server (with SSL) use port 9002 and the option useSSL=true to connect:
+
+```sh
+client = new Paho.MQTT.Client(location.hostname, Number(9002), guid());
+client.connect({ onSuccess: onConnect, useSSL:true });
+```
+
+
+
 testcase: publish an observation using the following HTTP Request and check if information is received:
 
 ```sh
