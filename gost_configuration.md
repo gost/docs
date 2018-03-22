@@ -31,7 +31,8 @@ mqtt:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enabled: true (true/false to enable/disable MQTT)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host: localhost (host of the MQTT broker)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;port: 1883 (port of the MQTT broker)<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prefix: GOST (GOST MQTT prefix)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prefix: GOST (GOST MQTT prefix)<br/>
+
 logger:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fileName: gost (filename to log to, leave blank to log to stdout)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verbose: true (true for logging debug and up, false to log from warn and up)<br />
