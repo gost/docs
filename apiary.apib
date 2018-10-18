@@ -914,6 +914,9 @@ Add a new Location to the Locations collection
             
 ### Post Location by Thing [POST /v1.0/Things({id})/Locations]
 
++ Parameters
+    + id (number) - id of the Thing to set the location for
+
 + Request (application/json)
 Add a new Location and link to Thing
 
@@ -1525,7 +1528,7 @@ Retrieve Datastreams by given Thing.
                         "Sensor@iot.navigationLink": "http://localhost/v1.0/Datastreams(2)/Sensor",
                         "Observations@iot.navigationLink": "http://localhost/v1.0/Datastreams(2)/Observations",
                         "ObservedProperty@iot.navigationLink": "http://localhost/v1.0/Datastreams(2)/ObservedProperty"
-                    }.
+                    },
                     {
                         "@iot.id": 1,
                         "@iot.selfLink": "http://localhost/v1.0/Datastreams(1)",
