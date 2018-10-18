@@ -583,6 +583,16 @@ Patch a specified Thing
     
             {
                 "name": "ALL YOUR BASE",
+                "description": "Netatmo VZ",
+                "properties": {
+                    "organisation": "Geodan",
+                    "owner": "Tim"
+                },
+                "Locations": [
+                    {
+                        "@iot.id": "1"
+                    }
+                ]
             }
             
 + Response 200 (application/json)
@@ -973,6 +983,15 @@ Patch a specified Location
     
             {
                 "name": "ALL YOUR BASE",
+                "description": "Geodan building",
+                "encodingType": "application/vnd.geo+json",
+                "location": {
+                    "coordinates": [
+                        4.9132,
+                        52.34227
+                    ],
+                    "type": "Point"
+                }
             }
             
 + Response 200 (application/json)
@@ -1806,6 +1825,13 @@ Patch a specified Datastream
     
             {
                 "name": "ALL YOUR BASE",
+                "description": "Temperature measurement from Netatmo 1 at Geodan Amsterdam",
+                "observationType": "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+                "unitOfMeasurement": {
+                    "definition": "http://www.qudt.org/qudt/owl/1.0.0/unit/Instances.html#Celsius",
+                    "name": "Celsius",
+                    "symbol": "C"
+                }
             }
             
 + Response 200 (application/json)
@@ -2049,6 +2075,9 @@ Patch a specified Sensor
     
             {
                 "name": "ALL YOUR BASE",
+                "description": "Digital temperature and humidity sensor",
+                "encodingType": "application/pdf",
+                "metadata": "https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf"
             }
             
 + Response 200 (application/json)
@@ -2277,6 +2306,8 @@ Patch a specified Sensor
     
             {
                 "name": "ALL YOUR BASE",
+                "description": "Temperature in situ",
+                "definition": "http://www.qudt.org/qudt/owl/1.0.0/quantity/Instances.html#Temperature"
             }
             
 + Response 200 (application/json)
@@ -2785,6 +2816,8 @@ Patch a specified Observation
     
             {
                 "result": 12.5,
+                "phenomenonTime": "2017-07-24T10:46:32.576Z",
+                "resultTime": "2017-07-24T10:46:32.576Z",
             }
             
 + Response 200 (application/json)
