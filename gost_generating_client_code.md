@@ -6,7 +6,13 @@ For a walkthrough see https://apimatic.docs.apiary.io/#introduction/working-with
 
 Sample:
 
-Send http post request to https://apimatic.io/api/codegen?name=gost&format=API%20;Blueprint&template=cs_portable_net_lib
+Validate the API description by sending http post request to https://apimatic.io/api/validate
+
+header: Authorization: your_key_from_https://apimatic.io
+
+body: content from apiary.apib
+
+Then for code generation send http post request to https://apimatic.io/api/codegen?name=gost&format=API%20;Blueprint&template=cs_portable_net_lib
 
 header: Authorization: your_key_from_https://apimatic.io
 
