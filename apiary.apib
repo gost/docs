@@ -137,7 +137,7 @@ Retrieve all Things.
 ### Get Thing by id [GET /v1.0/Things({id})]
 
 + Parameters
-    + id (number) - id of the Thing to retrieve
+    + id (number) - {INT} id of the Thing to retrieve
 
 + Request
 Retrieve a specific Thing by given id.
@@ -178,7 +178,7 @@ Retrieve a specific Thing by given id.
 
 ### Get Things by Location [GET /v1.0/Locations({id})/Things]
 + Parameters
-    + id (number) - ID of the Location to retrieve the things for
+    + id (number) - {INT} ID of the Location to retrieve the things for
 
 + Request
 Get all Things related to the specified Location
@@ -208,7 +208,7 @@ Get all Things related to the specified Location
 
 ### Get Thing by HistoricalLocation  [GET /v1.0/HistoricalLocations({id})/Thing]
 + Parameters
-    + id (number) - ID of the HistoricalLocations to retrieve the Thing for
+    + id (number) - {INT} ID of the HistoricalLocations to retrieve the Thing for
 
 + Request
 Get Thing related to the specified HistoricalLocation
@@ -233,7 +233,7 @@ Get Thing related to the specified HistoricalLocation
 
 ### Get Thing by Datastream  [GET /v1.0/Datastreams({id})/Thing]
 + Parameters
-    + id (number) - ID of the Datastream to retrieve the Thing for
+    + id (number) - {INT} ID of the Datastream to retrieve the Thing for
 
 + Request
 Get Thing related to the specified Datastream
@@ -574,7 +574,7 @@ Add a new Thing with Location and Datastream including a new Sensor, ObservedPro
 ### Patch Thing [PATCH /v1.0/Things({id})]
 
 + Parameters
-    + id (number) - ID of Thing to patch
+    + id (number) - {INT} ID of Thing to patch
 
 + Request (application/json)
 Patch a specified Thing
@@ -626,7 +626,7 @@ Patch a specified Thing
 ### Delete Thing [DELETE /v1.0/Things({id})]
 
 + Parameters
-    + id (number) - ID of thing to delete
+    + id (number) - {INT} ID of thing to delete
     
 + Response 200 (application/json)
 Delete a specified Thing from the Things collection
@@ -713,7 +713,7 @@ Retrieve all Locations.
 ### Get Location by id [GET /v1.0/Locations({id})]
 
 + Parameters
-    + id (number) - id of the Location to retrieve
+    + id (number) - {INT} id of the Location to retrieve
 
 + Request
 Retrieve a specific Location by given id.
@@ -756,7 +756,7 @@ Retrieve a specific Location by given id.
 ### Get Locations by Thing [GET /v1.0/Things({id})/Locations]
 
 + Parameters
-    + id (number) - id of the Thing to retrieve Locations for
+    + id (number) - {INT} id of the Thing to retrieve Locations for
 
 + Request
 Retrieve locations by specified Thing
@@ -806,7 +806,7 @@ Retrieve locations by specified Thing
 ### Get Locations by HistoricalLocations [GET /v1.0/HistoricalLocations({id})/Locations]
 
 + Parameters
-    + id (number) - id of the HistoricalLocation to retrieve Locations for
+    + id (number) - {INT} id of the HistoricalLocation to retrieve Locations for
 
 + Request
 Retrieve locations by specified HistoricalLocation
@@ -915,7 +915,7 @@ Add a new Location to the Locations collection
 ### Post Location by Thing [POST /v1.0/Things({id})/Locations]
 
 + Parameters
-    + id (number) - id of the Thing to set the location for
+    + id (number) - {INT} id of the Thing to set the location for
 
 + Request (application/json)
 Add a new Location and link to Thing
@@ -977,7 +977,7 @@ Add a new Location and link to Thing
 ### Patch Location [PATCH /v1.0/Locations({id})]
 
 + Parameters
-    + id (number) - ID of Location to patch
+    + id (number) - {INT} ID of Location to patch
 
 + Request (application/json)
 Patch a specified Location
@@ -1032,7 +1032,7 @@ Patch a specified Location
 ### Delete Location [DELETE /v1.0/Locations({id})]
 
 + Parameters
-    + id (number) - ID of Location to delete
+    + id (number) - {INT} ID of Location to delete
     
 + Response 200 (application/json)
 Delete a specified Location from the Locations collection
@@ -1099,7 +1099,7 @@ Retrieve all Locations.
 ### Get HistoricalLocation by id [GET /v1.0/HistoricalLocations({id})]
 
 + Parameters
-    + id (number) - id of the HistoricalLocation to retrieve
+    + id (number) - {INT} id of the HistoricalLocation to retrieve
 
 + Request
 Retrieve a specific HistoricalLocation by given id.
@@ -1135,7 +1135,7 @@ Retrieve a specific HistoricalLocation by given id.
 ### Get HistoricalLocations by Thing [GET /v1.0/Things({id})/HistoricalLocations]
 
 + Parameters
-    + id (number) - id of the Thing to retrieve HistoricalLocations for
+    + id (number) - {INT} id of the Thing to retrieve HistoricalLocations for
 
 + Request
 Retrieve HistoricalLocations by specified Thing
@@ -1183,7 +1183,7 @@ Retrieve HistoricalLocations by specified Thing
 ### Get HistoricalLocations by Location [GET /v1.0/Locations({id})/HistoricalLocations]
 
 + Parameters
-    + id (number) - id of the Location to retrieve HistoricalLocations for
+    + id (number) - {INT} id of the Location to retrieve HistoricalLocations for
 
 + Request
 Retrieve HistoricalLocations by specified Location
@@ -1273,7 +1273,7 @@ Add a new HistoricalLocation to the HistoricalLocations collection
 ### Patch HistoricalLocation [PATCH /v1.0/HistoricalLocations({id})]
 
 + Parameters
-    + id (number) - ID of HistoricalLocation to patch
+    + id (number) - {INT} ID of HistoricalLocation to patch
 
 + Request (application/json)
 Patch a specified Location
@@ -1310,7 +1310,7 @@ Patch a specified Location
 ### Delete Location [DELETE /v1.0/HistoricalLocations({id})]
 
 + Parameters
-    + id (number) - ID of HistoricalLocation to delete
+    + id (number) - {INT} ID of HistoricalLocation to delete
     
 + Response 200 (application/json)
 Delete a specified HistoricalLocation from the HistoricalLocations collection
@@ -1409,7 +1409,7 @@ Retrieve all Datastreams.
 ### Get Datastream by id [GET /v1.0/Datastreams({id})]
 
 + Parameters
-    + id (number) - id of the Datastream to retrieve
+    + id (number) - {INT} id of the Datastream to retrieve
 
 + Request
 Retrieve a specific Datastream by given id.
@@ -1454,7 +1454,7 @@ Retrieve a specific Datastream by given id.
 ### Get Datastream by Observation [GET /v1.0/Observations({id})/Datastream]
 
 + Parameters
-    + id (number) - id of the Observations to retrieve the Datastream for
+    + id (number) - {INT} id of the Observations to retrieve the Datastream for
 
 + Request
 Retrieve a Datastream by given observations.
@@ -1499,7 +1499,7 @@ Retrieve a Datastream by given observations.
 ### Get Datastreams by Thing [GET /v1.0/Things({id})/Datastreams]
 
 + Parameters
-    + id (number) - id of the Thing to retrieve the Datastreams for
+    + id (number) - {INT} id of the Thing to retrieve the Datastreams for
 
 + Request
 Retrieve Datastreams by given Thing.
@@ -1565,7 +1565,7 @@ Retrieve Datastreams by given Thing.
 ### Get Datastreams by Sensor [GET /v1.0/Sensors({id})/Datastreams]
 
 + Parameters
-    + id (number) - id of the Sensor to retrieve the Datastreams for
+    + id (number) - {INT} id of the Sensor to retrieve the Datastreams for
 
 + Request
 Retrieve Datastreams by given Sensor.
@@ -1616,7 +1616,7 @@ Retrieve Datastreams by given Sensor.
 ### Get Datastreams by ObservedProperty [GET /v1.0/ObservedProperties({id})/Datastreams]
 
 + Parameters
-    + id (number) - id of the ObservedProperty to retrieve the Datastreams for
+    + id (number) - {INT} id of the ObservedProperty to retrieve the Datastreams for
 
 + Request
 Retrieve Datastreams by given ObservedProperty.
@@ -1682,7 +1682,7 @@ Retrieve Datastreams by given ObservedProperty.
 ### Post Datastream by Thing with deep inserts [POST /v1.0/Things({id})/Datastreams]
 
 + Parameters
-    + id (number) - id of the Thing to link the new datastream to
+    + id (number) - {INT} id of the Thing to link the new datastream to
     
 + Request (application/json)
 Add a new Datastream and deep insert a new Sensor and ObservedProperty and link the Datastream to an existing Thing. Sensor and Observation.
@@ -1819,7 +1819,7 @@ Add a new Datastream and link to an existing Thing, Sensor and ObservedProperty
 ### Patch Datastream [PATCH /v1.0/Datastreams({id})]
 
 + Parameters
-    + id (number) - ID of Datastream to patch
+    + id (number) - {INT} ID of Datastream to patch
 
 + Request (application/json)
 Patch a specified Datastream
@@ -1870,7 +1870,7 @@ Patch a specified Datastream
 ### Delete Datastream [DELETE /v1.0/Datastreams({id})]
 
 + Parameters
-    + id (number) - ID of Datastream to delete
+    + id (number) - {INT} ID of Datastream to delete
     
 + Response 200 (application/json)
 Delete a specified Datastream from the Datastreams collection
@@ -1947,7 +1947,7 @@ Retrieve all Sensors.
 ### Get Sensors by id [GET /v1.0/Sensors({id})]
 
 + Parameters
-    + id (number) - id of the Sensor to retrieve
+    + id (number) - {INT} id of the Sensor to retrieve
 
 + Request
 Retrieve a specific Sensor by given id.
@@ -1985,7 +1985,7 @@ Retrieve a specific Sensor by given id.
 ### Get Sensor by Datastream [GET /v1.0/Datastreams({id})/Sensor]
 
 + Parameters
-    + id (number) - id of the Datastream to retrieve the Sensor for
+    + id (number) - {INT} id of the Datastream to retrieve the Sensor for
 
 + Request
 Retrieve a Sensor by given Datastream.
@@ -2069,7 +2069,7 @@ Add a new Sensor to the Sensors collection
 ### Patch Sensor [PATCH /v1.0/Sensors({id})]
 
 + Parameters
-    + id (number) - ID of Sensor to patch
+    + id (number) - {INT} ID of Sensor to patch
 
 + Request (application/json)
 Patch a specified Sensor
@@ -2112,7 +2112,7 @@ Patch a specified Sensor
 ### Delete Sensor [DELETE /v1.0/Sensors({id})]
 
 + Parameters
-    + id (number) - ID of Sensor to delete
+    + id (number) - {INT} ID of Sensor to delete
     
 + Response 200 (application/json)
 Delete a specified Sensor from the Sensors collection
@@ -2182,7 +2182,7 @@ Retrieve all ObservedProperties.
 ### Get ObservedProperty by id [GET /v1.0/ObservedProperties({id})]
 
 + Parameters
-    + id (number) - id of the ObservedProperty to retrieve
+    + id (number) - {INT} id of the ObservedProperty to retrieve
 
 + Request
 Retrieve a specific ObservedProperty by given id.
@@ -2219,7 +2219,7 @@ Retrieve a specific ObservedProperty by given id.
 ### Get ObservedProperty by Datastream [GET /v1.0/Datastreams({id})/ObservedProperty]
 
 + Parameters
-    + id (number) - id of the Datastream to retrieve the ObservedProperty for
+    + id (number) - {INT} id of the Datastream to retrieve the ObservedProperty for
 
 + Request
 Retrieve an ObservedProperty by given Datastream.
@@ -2300,7 +2300,7 @@ Add a new ObservedProperty to the ObservedProperties collection
 ### Patch ObservedProperty [PATCH /v1.0/ObservedProperties({id})]
 
 + Parameters
-    + id (number) - ID of ObservedProperty to patch
+    + id (number) - {INT} ID of ObservedProperty to patch
 
 + Request (application/json)
 Patch a specified Sensor
@@ -2341,7 +2341,7 @@ Patch a specified Sensor
 ### Delete ObservedProperty [DELETE /v1.0/ObservedProperties({id})]
 
 + Parameters
-    + id (number) - ID of ObservedProperty to delete
+    + id (number) - {INT} ID of ObservedProperty to delete
     
 + Response 200 (application/json)
 Delete a specified ObservedProperty from the ObservedProperties collection
@@ -2418,7 +2418,7 @@ Retrieve all Observations.
 ### Get Observation by id [GET /v1.0/Observations({id})]
 
 + Parameters
-    + id (number) - id of the Observation to retrieve
+    + id (number) - {INT} id of the Observation to retrieve
 
 + Request
 Retrieve a specific Observation by given id.
@@ -2456,7 +2456,7 @@ Retrieve a specific Observation by given id.
 ### Get Observations by FeatureOfInterest [GET /v1.0/FeaturesOfInterest({id})/Observations]
 
 + Parameters
-    + id (number) - id of the FeatureOfInterest to retrieve the Observations for
+    + id (number) - {INT} id of the FeatureOfInterest to retrieve the Observations for
 
 + Request
 Retrieve Observations for the given FeatureOfInterest.
@@ -2508,7 +2508,7 @@ Retrieve Observations for the given FeatureOfInterest.
 ### Get Observations by Datastream [GET /v1.0/Datastreams({id})/Observations]
 
 + Parameters
-    + id (number) - id of the Datastream to retrieve the Observations for
+    + id (number) - {INT} id of the Datastream to retrieve the Observations for
 
 + Request
 Retrieve Observations for the given Datastream.
@@ -2617,7 +2617,7 @@ Add a new Observation to the Observations collection with minimal parameters
 ### Post Observation by Datastream [POST /v1.0/Datastreams({id})/Observations]
 
 + Parameters
-    + id (number) - id of the Datastream to link the Observation to
+    + id (number) - {INT} id of the Datastream to link the Observation to
 
 + Request (application/json)
 Add a new Observation with minimal parameters to the Observations collection and link to a Datastream
@@ -2676,7 +2676,7 @@ Add a new Observation with minimal parameters to the Observations collection and
 ### Post Observation by Datastream with new FeatureOfInterest [POST /v1.0/Datastreams({id})/Observations]
 
 + Parameters
-    + id (number) - id of the Datastream to link the Observation to
+    + id (number) - {INT} id of the Datastream to link the Observation to
 
 + Request (application/json)
 Add a new Observation with all parameters including a new FeatureOfInterest to the Observations collection and link to Datastream. FeatureOfInterest can also be linked instead of a deep insert by giving it's id "FeatureOfInterest": {"@iot.id": "1"}
@@ -2810,7 +2810,7 @@ Add a new Observation with all parameters including a new FeatureOfInterest to t
 ### Patch Observation [PATCH /v1.0/Observations({id})]
 
 + Parameters
-    + id (number) - ID of Observation to patch
+    + id (number) - {INT} ID of Observation to patch
 
 + Request (application/json)
 Patch a specified Observation
@@ -2854,7 +2854,7 @@ Patch a specified Observation
 ### Delete Observations [DELETE /v1.0/Observations({id})]
 
 + Parameters
-    + id (number) - ID of Observation to delete
+    + id (number) - {INT} ID of Observation to delete
     
 + Response 200 (application/json)
 Delete a specified Observation from the Things collection
@@ -2945,7 +2945,7 @@ Retrieve all FeaturesOfInterest.
 ### Get FeaturesOfInterest by id [GET /v1.0/FeaturesOfInterest({id})]
 
 + Parameters
-    + id (number) - id of the FeatureOfInterest to retrieve
+    + id (number) - {INT} id of the FeatureOfInterest to retrieve
 
 + Request
 Retrieve a specific FeatureOfInterest by given id.
@@ -2990,7 +2990,7 @@ Retrieve a specific FeatureOfInterest by given id.
 ### Get FeaturesOfInterest by Observation [GET /v1.0/Observations({id})/FeatureOfInterest]
 
 + Parameters
-    + id (number) - id of the Observation to retrieve the FeatureOfInterest for
+    + id (number) - {INT} id of the Observation to retrieve the FeatureOfInterest for
 
 + Request
 Retrieve FeaturesOfInterest for a specific Observation
@@ -3090,7 +3090,7 @@ Add a new FeatureOfInterest to the FeaturesOfInterest collection
 ### Patch FeatureOfInterest [PATCH /v1.0/FeaturesOfInterest({id})]
 
 + Parameters
-    + id (number) - ID of FeatureOfInterest to patch
+    + id (number) - {INT} ID of FeatureOfInterest to patch
 
 + Request (application/json)
 Patch a specified FeatureOfInterest
@@ -3135,7 +3135,7 @@ Patch a specified FeatureOfInterest
 ### Delete FeatureOfInterest [DELETE /v1.0/FeaturesOfInterest({id})]
 
 + Parameters
-    + id (number) - ID of FeatureOfInterest to delete
+    + id (number) - {INT} ID of FeatureOfInterest to delete
     
 + Response 200 (application/json)
 Delete a specified FeatureOfInterest from the FeaturesOfInterest collection
@@ -3193,7 +3193,7 @@ Retrieve the result fields from all Observations.
 ### Retrieve name and description for specific Thing [GET /v1.0/Things({id})?$select=name,description]
 
 + Parameters
-    + id (number) - ID of Thing to retrieve
+    + id (number) - {INT} ID of Thing to retrieve
 
 + Request
 Retrieve 2 fields (name and description) for a specific Thing.  
@@ -3470,7 +3470,7 @@ A client can request a particular page of items by combining $top and $skip.
 ### Get the latest Observation result for Datastream[GET /v1.0/Datastreams({id})/Observations?$top=1&$select=result]
 
 + Parameters
-    + id (number) - ID of Datastream to retrieve the Observation for
+    + id (number) - {INT} ID of Datastream to retrieve the Observation for
 
 + Request
 Retrieve the latest Observation for a specific Datastream and display only the result of the Observation
@@ -3494,7 +3494,7 @@ Retrieve the latest Observation for a specific Datastream and display only the r
 ### Get the latest 5 Observation results for Datastream with result >= 20[GET /v1.0/Datastreams({id})/Observations?$filter=result ge 20&$select=result&$top=5]
 
 + Parameters
-    + id (number) - ID of Datastream to retrieve the Observation for
+    + id (number) - {INT} ID of Datastream to retrieve the Observation for
 
 + Request
 Retrieve the 5 latest Observations for a specific Datastream where the result is greater than 20
@@ -3534,7 +3534,7 @@ A client can request a particular page of items by combining $top and $skip.
 ### Get the second last Observation for Datastream[GET /v1.0/Datastreams({id})/Observations?$select=result&$skip=1]
 
 + Parameters
-    + id (number) - ID of Datastream to retrieve the Observation for
+    + id (number) - {INT} ID of Datastream to retrieve the Observation for
 
 + Request
 Retrieve the second last Observation for a specific Datastream and display only the result of the Observation
@@ -3563,7 +3563,7 @@ The service shall return an HTTP Status code of 400 Bad Request if a value other
 ### Get the count for a collection query [GET /v1.0/Datastreams({id})/Observations?$filter=result ge 101&$select=result&$count=true&$top=3]
 
 + Parameters
-    + id (number) - ID of Datastream to retrieve the Observation for
+    + id (number) - {INT} ID of Datastream to retrieve the Observation for
 
 + Request
 Retrieve the Observations for a specific Datastream where the result is greater or equal to 102, select only the result and phenomenonTime field values and return max 3 latest entries and return the total count of entities
@@ -3601,7 +3601,7 @@ returns the raw value for a field, $value can only be used when requesting a sin
 ### Get the raw result value for an Observation [GET /v1.0/Observations({id})/result/$value]
 
 + Parameters
-    + id (number) - ID of Datastream to retrieve the raw Observation result for
+    + id (number) - {INT} ID of Datastream to retrieve the raw Observation result for
 
 + Request
 Request an Observation result by adding the field in the url (/result) add /$value to request the raw value instead of a JSON object

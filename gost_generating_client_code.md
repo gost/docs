@@ -22,4 +22,4 @@ Result of this request is a link to a zip file with the generated code, somethin
 
 Supported languages (template parameter): cs_portable_net_lib , java_eclipse_jre_lib , java_gradle_android_lib , objc_cocoa_touch_ios_lib , angular_javascript_lib , ruby_generic_lib , python_generic_lib ￼ , php_generic_lib ￼ , node_javascript_lib ￼ , go_generic_lib
 
-
+Java is free while other languages are free only for the first two weeks after creating an Apimatic account...
