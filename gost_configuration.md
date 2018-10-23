@@ -32,7 +32,12 @@ mqtt:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host: localhost (host of the MQTT broker)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;port: 1883 (port of the MQTT broker)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prefix: GOST (GOST MQTT prefix)<br/>
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ssl: false (true/false to enable/disable ssl)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;caCertFile: cacert.crt (location of Certificate Authority (CA) file. Use when SSL is true.) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clientCertFile: client.crt (location of client certificate file. Use when SSL is true.) <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;privateKeyFile: client.key (location of the client key file. Use when SSL is true.)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;username:(username to be used. Optional)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: (password. Optional)<br/>
 logger:<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fileName: gost (filename to log to, leave blank to log to stdout)<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verbose: true (true for logging debug and up, false to log from warn and up)<br />
@@ -68,6 +73,12 @@ GOST_MQTT_HOST
 GOST_MQTT_PORT
 GOST_MQTT_PREFIX
 GOST_MQTT_CLIENTID
+GOST_MQTT_SSL
+GOST_MQTT_CA_CERT_FILE
+GOST_MQTT_CLIENT_CERT_FILE
+GOST_MQTT_PRIVATE_KEY_FILE
+GOST_MQTT_USERNAME
+GOST_MQTT_PASSWORD
 
 **Gost logging**  
 GOST_LOG_FILENAME  
