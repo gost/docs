@@ -28,6 +28,10 @@ $ docker-compose up
 
 Now open SQL client of choice (PGAdmin/PGSQL/DBeaver) and make a database connection on port 5432.
 
+```
+$ psql -U postgres
+```
+
 Connect to GOST database:
 
 ```
