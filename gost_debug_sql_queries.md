@@ -4,7 +4,7 @@ In this document a method to quickly debug GOST sql queries is described.
 
 ## Enable GOST verbose logging
 
-Add the evironment variable 'GOST_LOG_VERBOSE_FLAG' with value '1' to the GOST section in docker-compose.yml:
+Add the environment variable 'GOST_LOG_VERBOSE_FLAG' with value '1' to the GOST section in docker-compose.yml:
 
 ```
 environment:
@@ -28,10 +28,20 @@ $ docker-compose up
 
 Now open SQL client of choice (PGAdmin/PGSQL/DBeaver) and make a database connection on port 5432.
 
+Connect to GOST database:
+
+```
+postgres=# \connect gost
+```
+
 Sample test query (to get the number of things in the database):
 
 ```
-select count(*) from v1.thing
+gost=# select count(*) from v1.thing;
+ count
+---------
+    1
+(1 row)
 ```
 
 ## Debugging
