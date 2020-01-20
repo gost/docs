@@ -1,54 +1,75 @@
-# How to run SensorThings GOST on Raspberry Pi
+# How to run GOST on Raspberry Pi
 
-## Version
+Warning: Raspberry Pi support for GOST is in experimental phase!
 
-Check version of your Raspberry Pi:
+## Flash card
 
-This document is written for Raspian Jessie.
+For running GOST we need to have a flash card with Docker installed.
 
-```
-pi@raspberrypi:~ $ lsb_release -a
-No LSB modules are available.
-Distributor ID:	Raspbian
-Description:	Raspbian GNU/Linux 8.0 (jessie)
-Release:	8.0
-Codename:	jessie
-pi@raspberrypi:~ $ 
-```
+One easy option is to use the <a href="https://blog.hypriot.com/">Hypriot</a> images, it comes with Docker tools installed.
 
-## Install Docker
+Installation instructions:
 
-```
-pi@raspberrypi:~ $ curl -sSL get.docker.com | sh
-```
+- For Mac: https://blog.hypriot.com/getting-started-with-docker-and-mac-on-the-raspberry-pi/
 
-For safety, reboot the Raspberrypi.
+- For Windows: https://blog.hypriot.com/getting-started-with-docker-and-windows-on-the-raspberry-pi/
 
-Check installation with:
+- For Linux: https://blog.hypriot.com/getting-started-with-docker-and-linux-on-the-raspberry-pi/
+
+Use the latest Hypriot image: https://github.com/hypriot/image-builder-rpi/releases/download/v1.5.0/hypriotos-rpi-v1.5.0.img.zip (29.06.2017)
+
+TL;DR for Mac:
 
 ```
-pi@raspberrypi:~ $ sudo docker info
+$ diskutil list
+$ diskutil unmountdisk /dev/disk2 
+$ sudo dd if=hypriotos-rpi-v1.5.0.img of=/dev/rdisk2 bs=1m
 ```
-Now install docker-compose:
+
+After installation, you should be able to login on machine 'black-pearl' with 'pirate' as username, password 'hypriot'
 
 ```
-pi@raspberrypi:~ $ sudo apt-get install python-pip
+$ ssh pirate@black-pearl
+```
 
-pi@raspberrypi:~ $ sudo pip install docker-compose
+Now update the installation:
 
+```
+$ sudo apt-get update
+$ sudo apt-get upgrade docker-hypriot docker-compose
 ```
 
 ## Install GOST
 
-Note: downloading new images can take some time... 
+Execute the following commands to install GOST on the Raspberry Pi.
+
+Note: downloading new images can take some time... So grab a coffee and relax while GOST is installing... 
 
 ```
-pi@raspberrypi:~ $ wget https://raw.githubusercontent.com/gost/docker-compose/master/docker-compose-rpi.yml
-pi@raspberrypi:~ $ sudo docker-compose -f docker-compose-rpi.yml up
+$ curl https://raw.githubusercontent.com/gost/docker-compose/master/docker-compose-rpi.yml > docker-compose.yml
+$ docker-compose up
+```
+
+System is ready when these kind of messages appear:
+
+```
+gost-db_1    | LOG:  MultiXact member wraparound protections are now enabled
+gost-db_1    | LOG:  autovacuum launcher started
+gost-db_1    | LOG:  database system is ready to accept connections
+node-red_1   | 1 Sep 10:42:03 - [info] Dashboard version 2.2.1 started at /ui
+node-red_1   | 1 Sep 10:42:04 - [info] Settings file  : /root/.node-red/settings.js
+node-red_1   | 1 Sep 10:42:04 - [info] User directory : /root/.node-red
+node-red_1   | 1 Sep 10:42:04 - [info] Flows file     : /root/.node-red/flows_d25030c9374a.json
+node-red_1   | 1 Sep 10:42:04 - [info] Creating new flow file
+node-red_1   | 1 Sep 10:42:04 - [info] Starting flows
+node-red_1   | 1 Sep 10:42:04 - [info] Started flows
+node-red_1   | 1 Sep 10:42:04 - [info] Server now running at http://127.0.0.1:1880/
 ```
 
 ## Check installation
 
-- Dashboard: In browser go to http://raspberrypi:8080
+- Dashboard: In browser go to http://black-pearl:8080
 
-If dashboard is working, you can continue with the <a href="https://github.com/gost/workshops/blob/master/2_configuration.md">Workshop exercises</a> to configure GOST. Make sure to replace 'localhost' with 'raspberrypi' in the exercises. 
+- Node-RED: In browser go to http://black-pearl:1880
+
+If the dashboard is working, you can continue with the <a href="https://github.com/gost/workshops/blob/master/2017_foss4g_boston/3_configuration.md">Workshop exercises</a> to configure GOST. Make sure to replace 'localhost' with 'black-pearl' in the exercises. 
