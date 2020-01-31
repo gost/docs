@@ -1,6 +1,6 @@
 # GOST Debug SQL Queries
 
-In this document a method to quickly debug GOST sql queries is described. 
+In this document a method to quickly debug GOST SQL queries is described. 
 
 ## Enable GOST verbose logging
 
@@ -26,7 +26,7 @@ And start GOST
 $ docker-compose up
 ```
 
-Now open SQL client of choice (PGAdmin/PSQL/DBeaver) and make a database connection on port 5432.
+Now open SQL client of choice (PGAdmin/psql/DBeaver) and make a database connection on port 5432.
 
 ```
 $ psql -U postgres
@@ -56,7 +56,11 @@ Start GOST without detached mode
 $ docker-compose up
 ```
 
-Execute queries in a browser, for example go to 'http://localhost:8080/v1.0/Things'
+Execute a HTTP GET, for example 'http://localhost:8080/v1.0/Things'
+
+```
+$ curl http://localhost:8080/v1.0/Things
+```
 
 In the console you'll see SQL queries and timings:
 
